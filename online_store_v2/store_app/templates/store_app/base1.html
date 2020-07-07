@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block javascript %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    {% endblock %}
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:700&display=swap" rel="stylesheet">
+    <title>{% block title %} Главная {% endblock %}</title>
+
+    <link href="{% static 'css/1.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+{#{% if not user.is_authenticated %}#}
+<div id="modal-login"></div>
+<div class="popup-login-window" id="popup-login-window">
+    <div class="" id="flag"><div class="popup-login-window__close-button"></div></div>
+    <div class="popup-login-window__wrapper">
+        <p class="popup-login-window__title">АВТОРИЗАЦИЯ</p>
+        <form class="login-form" method="post">
+            {% csrf_token %}
+            <p class="login-form__errors" id="login-form__errors"></p>
+            <p class="login-form__input" id="user-name">{{ login_form.username }}</p>
+            <p class="login-form__input" id="user-password">{{ login_form.password }}</p>
+            <p class="login-form__paragraph">Забыли пароль?</p>
+            <button type="submit" id="authenticate">Войти</button>
+            <p class="login-form__register"><a href="" class="login-form__register-link">Регистрация</a></p>
+        </form>
+    </div>
+</div>
+{#{% endif %}#}
+<header>
+    <div class="upper-popup-window-hidden"></div>
+    <div class="upper-popup-window">
+        <div class="upper-popup-window__wrapper">
+            <p class="upper-popup-window__text">Быстрая доставка по Москве.</p>
+            <span class="upper-popup-window__close-button"></span>
+        </div>
+    </div>
+    <div class="header-wrapper-outer">
+        <section class="header-upper-part">
+            <div class="header-upper-part__wrapper">
+                <div class="header-upper-part__left left-side">
+                    <div class="left-side__item">
+                        <p class="left-side__phone-number">+7 (800) 234 80 55</p>
+                        <p class="left-side__phone-number">+7 (800) 234 80 54</p>
+                        <p class="left-side__working-hours">09:00-21:00 пн-пт</p>
+                        <p class="left-side__working-hours">10:00-20:00 сб-вс</p>
+                    </div>
+                    <div class="left-side__item">
+                        <div class="left-side__delivery-wrapper">
+                            <img class="left-side__delivery-image" src="{% static 'store_app/delivery-logo.png' %}"
+                                 alt="">
+                            <div class="">
+                                <p class="left-side__delivery">Быстрая доставка</p>
+                                <p class="left-side__delivery">свежих продуктов</p>
+                                <p class="left-side__delivery">По Москве</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img class="logo" src="{% static 'store_app/1.png' %}" alt="">
+                <div class="header-upper-part__right-side right-side">
+                    <div class="right-side__item">
+                        <ul class="user-list">
+                            {% if user.is_authenticated %}
+                                <li class="user-list__item">
+                                    <a class="user-list__link user-list__item--log" href="">Выйти</a>
+                                </li>
+                            {% else %}
+                                <li class="user-list__item user-list__item--log">
+                                    <a id="login-button" class="user-list__link" href="">Вход</a>
+                                </li>
+                                <li class="user-list__item user-list__item--reg">
+                                    <a class="user-list__link" href="">Регистрация</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                        <a href="#" class="right-side__link">Вы недавно смотрели</a>
+                        <a href="" id="my-favorites" class="right-side__link">Мои закладки: (<span id="favorites-quantity">{{ user_favorites_quantity }}</span>)</a>
+                    </div>
+                    <div class="right-side__item right-side__item--cart">
+                        <p class="cart">
+                            <a class="cart__link" href="">
+                                <img class="cart__image" src="{% static 'store_app/cart.png' %}" alt="">
+                                КОРЗИНА
+                            </a>
+                        </p>
+                        <div class="cart-order__wrapper">
+                            <div>
+                                <p class="cart__paragraph">Товаров:
+                                    <span id="cart_count">{{ cart.get_products_quantity }}</span> шт.</p>
+                                <p class="cart__paragraph">Сумма: <span
+                                        id="cart-total-sum">{{ cart.cart_total }}</span> руб.</p>
+                            </div>
+                            <p id="cart__order-button" class="cart__order-button"><span class="">Оформить заказ</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <nav class="header-lower-part">
+            <ul class="navbar">
+                <li class="navbar__item">
+                    <a href="#" class="navbar__link">О нас</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="#" class="navbar__link">Новости</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="#" class="navbar__link">Акции</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="" class="navbar__link">Продукты</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="#" class="navbar__link">Статьи</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="#" class="navbar__link">Доставка и оплата</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="" class="navbar__link">Контакты</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+{% block content %}
+    <main>
+        <div class="main-page-content-wrapper">
+            <div id="root"></div>
+        </div>
+    </main>
+{% endblock %}
+</body>
+</html>
+<script src="{% static 'javascript/js.js' %}"></script>
+<script src="{% static 'javascript/upper_popup_window.js' %}"></script>
+<script src="{% static 'javascript/active_barlink.js' %}"></script>
+<script src="{% static 'javascript/cart.js' %}"></script>
+
+{% include 'react/base_embed.html' %}
+{% include 'react/js.html' %}
+{% block js %}
+
+{% endblock %}
