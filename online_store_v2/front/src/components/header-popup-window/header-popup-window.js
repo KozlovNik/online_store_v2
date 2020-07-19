@@ -1,30 +1,25 @@
-import React from 'react';
-
-import { connect } from 'react-redux';
-import { setHeaderPopupFalse } from '../../redux/actions';
+import React, { useState } from 'react';
 
 import './header-popup-window.css';
 
-const HeaderPopupWindow = ({ setHeaderPopupFalse, headerPopup }) => {
-    let display;
-    if (headerPopup) {
-        display = (
-            <div className="header-popup-window__wrapper">
-                <p className="header-popup-window__text">Быстрая доставка по Москве.</p>
-                <span
-                    className="header-popup-window__close-button"
-                    onClick={() => setHeaderPopupFalse()}></span>
-            </div >
-        )
-    } else {
-        display = <div className="header-popup-window__empty-block"></div>;
-    }
+const HeaderPopupWindow = () => {
 
-    return <div className="header-popup-window">{display}</div>;
+    const [popup, setPopup] = useState(true);
+
+    return (
+        <div className="header-popup-window">
+            {
+                popup &&
+                <div className="header-popup-window__wrapper">
+                    <p className="header-popup-window__text">Быстрая доставка по Москве.</p>
+                    <span
+                        className="header-popup-window__close-button"
+                        onClick={() => setPopup(false)}>
+                    </span>
+                </div >
+            }
+        </div>
+    )
 }
 
-function mapStateToProps({ headerPopup }) {
-    return { headerPopup }
-}
-
-export default connect(mapStateToProps, { setHeaderPopupFalse })(HeaderPopupWindow);
+export default HeaderPopupWindow;
