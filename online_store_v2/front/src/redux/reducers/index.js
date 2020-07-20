@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import headerPopup from "./header-popup";
+import modals from "./modals";
 
-
-export default combineReducers({ headerPopup });
+export default combineReducers({ modals });

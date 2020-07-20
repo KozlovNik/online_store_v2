@@ -1,16 +1,24 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+import { setLoginModalWindow } from '../../redux/actions';
+
 import './header-main-part.css';
 
 
-const HeaderMainPart = () => {
+const HeaderMainPart = ({ setLoginModalWindow }) => {
 
     const navbar = ['О нас', 'Новости', 'Акции', 'Продукты', 'Статьи', 'Доставка и оплата', 'Контакты'];
+
+    const handleLoginButtonClick = (e) => {
+        e.preventDefault();
+        setLoginModalWindow(true);
+    }
 
     const navbarEls = navbar.map((text, ind) => {
         return (
             <li key={ind}>
-                <a href="#" className="navbar__link">{text}</a>
+                <a className="navbar__link">{text}</a>
             </li>
         );
     })
@@ -43,7 +51,10 @@ const HeaderMainPart = () => {
                         <div className="right-side__item">
                             <ul className="user-list">
                                 <li className="user-list__item user-list__item--log">
-                                    <a id="login-button" className="user-list__link" href="">Вход</a>
+                                    <a
+                                        className="user-list__link"
+                                        href=""
+                                        onClick={handleLoginButtonClick}>Вход</a>
                                 </li>
                                 <li className="user-list__item user-list__item--reg">
                                     <a className="user-list__link" href="">Регистрация</a>
@@ -81,4 +92,4 @@ const HeaderMainPart = () => {
     );
 }
 
-export default HeaderMainPart;
+export default connect(null, { setLoginModalWindow })(HeaderMainPart);
