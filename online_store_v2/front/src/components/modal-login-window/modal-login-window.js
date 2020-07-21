@@ -1,37 +1,31 @@
 import React from 'react';
 
+import LoginForm from '../login-form';
+import LoginCLoseButton from '../login-close-button';
+
 import { connect } from 'react-redux';
 import { setLoginModalWindow } from '../../redux/actions';
 
 import './modal-login-window.css';
 
-const ModalLoginWindow = ({ loginPopup, setLoginModalWindow }) => {
+const ModalLoginWindow = ({ loginPopup, setLoginModalWindow, errors }) => {
+
+    // console.log(errors)
 
     return loginPopup
         ? <div className="modal-login-layout">
             <div className="popup-login-window">
-                <div
-                    className="flag"
-                    onClick={() => setLoginModalWindow(false)}>
-                    <div className="popup-login-window__close-button">
-                    </div>
-                </div>
+                <LoginCLoseButton />
                 <div className="popup-login-window__wrapper">
                     <p className="popup-login-window__title">АВТОРИЗАЦИЯ</p>
-                    <form className="login-form">
-                        <p className="login-form__errors"></p>
-                        <input
-                            type="text"
-                            className="login-form__input"
-                            placeholder="Логин" />
-                        <input
-                            type="password"
-                            className="login-form__input"
-                            placeholder="Пароль" />
-                        <p className="login-form__paragraph">Забыли пароль?</p>
-                        <button className="login-form__button">Войти</button>
-                        <button className="login-form__button login-form__button--register">Регистрация</button>
-                    </form>
+                    <p className="popup-login-window__errors">
+                        {
+                            errors && errors.map((el, ind) =>
+                                <span key={ind}>{el[0]}</span>)
+                        }
+                    </p>
+                    <LoginForm />
+                    <button className="login-form__button login-form__button--register">Регистрация</button>
                 </div>
             </div>
         </div>
@@ -39,6 +33,9 @@ const ModalLoginWindow = ({ loginPopup, setLoginModalWindow }) => {
 
 }
 
-const mapStateToProps = state => ({ loginPopup: state.modals.loginPopup });
+const mapStateToProps = state => ({
+    loginPopup: state.modals.loginPopup,
+    errors: state.auth.errors
+});
 
 export default connect(mapStateToProps, { setLoginModalWindow })(ModalLoginWindow);

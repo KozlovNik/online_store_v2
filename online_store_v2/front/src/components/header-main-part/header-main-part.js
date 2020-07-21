@@ -1,19 +1,15 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
-import { setLoginModalWindow } from '../../redux/actions';
+import Auth from '../auth';
 
 import './header-main-part.css';
 
 
-const HeaderMainPart = ({ setLoginModalWindow }) => {
+const HeaderMainPart = () => {
 
     const navbar = ['О нас', 'Новости', 'Акции', 'Продукты', 'Статьи', 'Доставка и оплата', 'Контакты'];
 
-    const handleLoginButtonClick = (e) => {
-        e.preventDefault();
-        setLoginModalWindow(true);
-    }
+    
 
     const navbarEls = navbar.map((text, ind) => {
         return (
@@ -49,17 +45,7 @@ const HeaderMainPart = ({ setLoginModalWindow }) => {
                     <img className="logo" src="http://localhost:8000/static/store_app/1.png" alt="" />
                     <div className="header-upper-part__right-side right-side">
                         <div className="right-side__item">
-                            <ul className="user-list">
-                                <li className="user-list__item user-list__item--log">
-                                    <a
-                                        className="user-list__link"
-                                        href=""
-                                        onClick={handleLoginButtonClick}>Вход</a>
-                                </li>
-                                <li className="user-list__item user-list__item--reg">
-                                    <a className="user-list__link" href="">Регистрация</a>
-                                </li>
-                            </ul>
+                            <Auth />
                             <a href="#" className="right-side__link">Вы недавно смотрели</a>
                             <a href="" id="my-favorites" className="right-side__link">Мои закладки: (<span id="favorites-quantity"></span>)</a>
                         </div>
@@ -92,4 +78,4 @@ const HeaderMainPart = ({ setLoginModalWindow }) => {
     );
 }
 
-export default connect(null, { setLoginModalWindow })(HeaderMainPart);
+export default HeaderMainPart;

@@ -130,31 +130,6 @@
     color: #499700;
 }
 
-.user-list {
-    justify-content: space-between;
-    display: flex;
-    list-style: none;
-}
-
-.user-list__item {
-    text-align: center;
-    min-width: 40px;
-    border-radius: 3px;
-    background-color: #ff755d;
-    padding: 5px;
-}
-
-.user-list__item--reg {
-    background-color: #779750;
-}
-
-.user-list__link {
-    color: white;
-    font: 14px 'Lago', sans-serif;
-    font-weight: 600;
-    text-decoration: none;
-}
-
 .cart-order__wrapper {
     width: 100%;
     display: flex;

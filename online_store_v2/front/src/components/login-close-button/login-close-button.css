@@ -1,0 +1,44 @@
+.flag {
+    cursor: pointer;
+    right: 10px;
+    top: -5px;
+    width: 30px;
+    height: 20px;
+    box-sizing: content-box;
+    padding-top: 15px;
+    position: absolute;
+    background: red;
+    color: transparent;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.flag:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 5px solid #ffffff;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+}
+
+.popup-login-window__close-button:before, .popup-login-window__close-button:after {
+    position: absolute;
+    top: 7px;
+    left: 14px;
+    content: ' ';
+    height: 20px;
+    width: 2px;
+    background-color: rgb(255, 255, 255);
+}
+.popup-login-window__close-button:before {
+    transform: rotate(45deg);
+}
+.popup-login-window__close-button:after {
+    transform: rotate(-45deg);
+}

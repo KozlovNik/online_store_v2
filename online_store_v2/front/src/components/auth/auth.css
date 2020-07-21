@@ -1,0 +1,21 @@
+.auth-list {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.auth-list__button {
+    background-color: #ff755d;
+    color: white;
+    font: 14px 'Lago', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+    border: none;
+    text-decoration: none;
+}
+
+.auth-list__button--reg {
+    background-color: #779750;
+}
