@@ -10,13 +10,23 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+
+    password2 = serializers.CharField()
+
     class Meta:
         model = User
-        fields = ['username', 'password']
+        fields = ['email', 'password', 'password2']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+        email = validated_data['email']
+        password = validated_data['password']
+        return User.objects.create_user(email=email, password=password)
+
+    def validate(self, data):
+        if data['password'] != data['password2']:
+            raise serializers.ValidationError("Несовпадение пароля")
+        return data
 
 
 class LoginSerializer(serializers.Serializer):

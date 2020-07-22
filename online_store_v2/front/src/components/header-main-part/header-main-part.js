@@ -9,8 +9,6 @@ const HeaderMainPart = () => {
 
     const navbar = ['О нас', 'Новости', 'Акции', 'Продукты', 'Статьи', 'Доставка и оплата', 'Контакты'];
 
-    
-
     const navbarEls = navbar.map((text, ind) => {
         return (
             <li key={ind}>

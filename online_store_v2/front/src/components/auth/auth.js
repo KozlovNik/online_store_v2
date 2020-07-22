@@ -3,6 +3,8 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { setLoginModalWindow, logout } from '../../redux/actions';
 
+import { Link } from 'react-router-dom'
+
 import './auth.css';
 
 const Auth = ({ setLoginModalWindow, isAuthenticated, isLoading, logout }) => {
@@ -23,7 +25,7 @@ const Auth = ({ setLoginModalWindow, isAuthenticated, isLoading, logout }) => {
         authValue = (
             <li className="auth-list__item">
                 <button
-                    class="auth-list__button"
+                    className="auth-list__button"
                     onClick={handleLogoutButtonCLick}>Выйти</button>
             </li>
         )
@@ -36,8 +38,11 @@ const Auth = ({ setLoginModalWindow, isAuthenticated, isLoading, logout }) => {
                         onClick={handleLoginButtonClick}>Вход</button>
                 </li>
                 <li className="auth-list__item">
-                    <button
-                        className="auth-list__button auth-list__button--reg">Регистрация</button>
+                    <Link to="/register">
+                        <button className="auth-list__button auth-list__button--reg">
+                            Регистрация
+                        </button>
+                    </Link>
                 </li>
             </Fragment>
         )

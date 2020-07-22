@@ -16,6 +16,10 @@
     text-decoration: none;
 }
 
+.auth-list__button:focus {
+    outline: none
+}
+
 .auth-list__button--reg {
     background-color: #779750;
 }

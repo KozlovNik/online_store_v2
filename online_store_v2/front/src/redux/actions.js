@@ -7,7 +7,10 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
     LOGOUT_SUCCESS,
-    LOGOUT_FAILURE
+    LOGOUT_FAILURE,
+    REGISTER_SUCCESS,
+    REGISTER_FAILURE,
+    REGISTER_REQUEST
 } from '../redux/action-types';
 import axios from 'axios';
 
@@ -30,10 +33,10 @@ export const getUser = () => (dispatch, getState) => {
     axios.post(`${link}accounts/user/`, null, {
         headers: {
             'Authorization': `token ${token}`,
-            'Content-Type': 'application/json'
         }
     })
         .then(res => dispatch({ type: GET_USER_LOADED, payload: res.data }))
+        .catch(() => dispatch({ type: GET_USER_FAILURE }))
 }
 
 export const login = data => dispatch => {
@@ -46,26 +49,27 @@ export const login = data => dispatch => {
             dispatch(setLoginModalWindow(false))
         })
         .catch(err => {
-            const errors = err.response.data;
-            const errorsObj = Object.values(errors);
-            dispatch({
-                type: LOGIN_FAILURE, payload: errorsObj
-            })
+            try {
+                const errors = err.response.data;
+                const errorsObj = Object.values(errors);
+                dispatch({
+                    type: LOGIN_FAILURE, payload: errorsObj
+                })
+            } catch (e) { }
         })
 }
 
-export const logout = data => dispatch => {
+export const logout = () => dispatch => {
 
     const token = localStorage.getItem('token')
 
     axios.post(`${link}accounts/logout/`, null, {
         headers: {
             'Authorization': `token ${token}`,
-            'Content-Type': 'application/json'
         }
     })
         .then(() => {
-            dispatch({ type: LOGOUT_SUCCESS})
+            dispatch({ type: LOGOUT_SUCCESS })
         })
         .catch(err => {
             const errors = err.response.data;
@@ -73,5 +77,25 @@ export const logout = data => dispatch => {
             dispatch({
                 type: LOGOUT_FAILURE, payload: errorsObj
             })
+        })
+}
+
+export const register = (data, cb) => dispatch => {
+    dispatch({ type: REGISTER_REQUEST })
+
+    axios.post(`${link}accounts/register/`, data)
+        .then(res => {
+            dispatch({ type: REGISTER_SUCCESS, payload: res.data })
+            cb();
+
+        })
+        .catch(err => {
+            try {
+                const errors = err.response.data;
+                const errorsObj = Object.values(errors);
+                dispatch({
+                    type: REGISTER_FAILURE, payload: errorsObj
+                })
+            } catch (e) { }
         })
 }
