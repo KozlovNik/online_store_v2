@@ -5,7 +5,8 @@ import { getUser } from '../../redux/actions';
 
 import Header from '../header';
 import ModalLoginWindow from '../modal-login-window';
-import Register from '../register-page';
+import RegisterPage from '../register-page';
+import IndexPage from '../index-page';
 
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -23,10 +24,14 @@ const App = ({ getUser }) => {
             <Header />
 
             <div className="app">
+
                 <Switch>
                     <Route
-                        exact path="/register"
-                        component={Register} />
+                        exact path="/"
+                        component={IndexPage} />
+                    <Route
+                        path="/register"
+                        component={RegisterPage} />
                 </Switch>
             </div>
         </Router>
