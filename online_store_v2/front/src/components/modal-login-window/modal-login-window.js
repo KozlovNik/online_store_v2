@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, createRef } from 'react';
 
 import LoginForm from '../login-form';
 import LoginCLoseButton from '../login-close-button';
@@ -10,10 +10,19 @@ import './modal-login-window.css';
 
 const ModalLoginWindow = ({ loginPopup, setLoginModalWindow, errors }) => {
 
-    // console.log(errors)
+    const layoutRef = useRef();
+    
+    const handleLayoutClick = e => {
+        if (e.target === layoutRef.current){
+            setLoginModalWindow(false);
+        }
+    }
 
     return loginPopup
-        ? <div className="modal-login-layout">
+        ? <div
+            className="modal-login-layout"
+            onClick={handleLayoutClick}
+            ref={layoutRef}>
             <div className="popup-login-window">
                 <LoginCLoseButton />
                 <div className="popup-login-window__wrapper">

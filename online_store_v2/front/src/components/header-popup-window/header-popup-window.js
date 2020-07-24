@@ -7,7 +7,8 @@ const HeaderPopupWindow = () => {
     const [popup, setPopup] = useState(true);
 
     return (
-        <div className="header-popup-window">
+        <div 
+        className="header-popup-window">
             {
                 popup &&
                 <div className="header-popup-window__wrapper">

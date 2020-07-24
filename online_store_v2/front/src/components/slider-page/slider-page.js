@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 import SliderImage from '../slider-img';
 import Bubble from '../bubble';
 
-import './index-page.css';
+import './slider-page.css';
 
 const sliderArr = [1, 2, 3];
 
-const IndexPage = () => {
+const SliderPage = () => {
 
     const [x, setX] = useState(0);
 
@@ -67,4 +67,4 @@ const IndexPage = () => {
     )
 }
 
-export default IndexPage;
+export default SliderPage;
