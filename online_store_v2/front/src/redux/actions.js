@@ -10,7 +10,8 @@ import {
     LOGOUT_FAILURE,
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
-    REGISTER_REQUEST
+    REGISTER_REQUEST,
+    GET_ALL_PRODUCTS_REQUEST
 } from '../redux/action-types';
 import axios from 'axios';
 
@@ -99,3 +100,24 @@ export const register = (data, cb) => dispatch => {
             } catch (e) { }
         })
 }
+
+export const getAllProducts = () => dispatch => {
+
+    dispatch({ type: GET_ALL_PRODUCTS_REQUEST })
+
+    axios.get(`${link}categories/`)
+        .then(res => {
+            console.log(res.data)
+            // dispatch({ type: GET_ALL_PRODUCTS_SUCCESS, payload: res.data })
+        })
+        // .catch(err => {
+        //     try {
+        //         const errors = err.response.data;
+        //         const errorsObj = Object.values(errors);
+        //         dispatch({
+        //             type: LOGIN_FAILURE, payload: errorsObj
+        //         })
+        //     } catch (e) { }
+        // })
+}
+

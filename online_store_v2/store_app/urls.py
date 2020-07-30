@@ -1,13 +1,12 @@
 from django.urls import path
-from .views import home
 
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import TemplateView
+from .api import ProductAPIView
+
 
 urlpatterns = [
-    path('', home),
-    path('react/', TemplateView.as_view(template_name='store_app/react.html'))
+    path('api/categories/', ProductAPIView.as_view()),
 ]
 
 if settings.DEBUG:

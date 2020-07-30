@@ -3,16 +3,25 @@ import React from 'react';
 import Auth from '../auth';
 
 import './header-main-part.css';
+import { Link } from 'react-router-dom';
 
+const navbar = [
+    { title: 'О нас', link: '/about' },
+    { title: 'Новости', link: '/news' },
+    { title: 'Акции', link: '/discounts' },
+    { title: 'Продукты', link: '/products' },
+    { title: 'Статьи', link: '/articles' },
+    { title: 'Доставка и оплата', link: '/delivery' },
+    { title: 'Контакты', link: '/contacts' }
+];
 
 const HeaderMainPart = () => {
 
-    const navbar = ['О нас', 'Новости', 'Акции', 'Продукты', 'Статьи', 'Доставка и оплата', 'Контакты'];
-
-    const navbarEls = navbar.map((text, ind) => {
+    const navbarEls = navbar.map(el => {
+        const { title, link } = el;
         return (
-            <li key={ind}>
-                <a className="navbar__link">{text}</a>
+            <li key={title}>
+                <Link to={link} className="navbar__link">{title}</Link>
             </li>
         );
     })
