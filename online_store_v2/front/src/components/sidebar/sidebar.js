@@ -12,11 +12,11 @@ const Sidebar = () => {
     return (
 
         <Router>
-            <nav class="sidebar">
-                <h3 class="sidebar__header">Категории</h3>
-                <ul class="sidebar__list">
-                    <li class="sidebar__item">
-                        <Link class="sidebar__link" to={`${url}/category`}>Напитки</Link>
+            <nav className="sidebar">
+                <h3 className="sidebar__header">Категории</h3>
+                <ul className="sidebar__list">
+                    <li className="sidebar__item">
+                        <Link className="sidebar__link" to={`${url}/category`}>Напитки</Link>
                     </li>
                 </ul>
             </nav>
