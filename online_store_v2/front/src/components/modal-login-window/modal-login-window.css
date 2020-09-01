@@ -1,4 +1,4 @@
-.popup-login-window {
+.modal-login-window {
     z-index: 3;
     position: absolute;
     width: 300px;
@@ -10,13 +10,13 @@
     border: 1px solid #dcdcdc;
 }
 
-.popup-login-window__wrapper {
+.modal-login-window__wrapper {
     width: 220px;
     min-height: 320px;
     margin: 40px;
 }
 
-.popup-login-window__title {
+.modal-login-window__title {
     font: 20px 'Lato', sans-serif;
     line-height: 20px;
     color: #727272;
@@ -31,9 +31,16 @@
     height: 100vh;
     position: fixed;
     background-color: rgba(24, 21, 21, 0.24);
+    opacity:1;
+    transition:visibility 0.25s linear, opacity 0.25s ease-out;
 }
 
-.popup-login-window__errors {
+.modal-login-layout--hidden {
+    visibility: hidden;
+    opacity:0;
+}
+
+.modal-login-window__errors {
     color: #990000;
     font: 12px 'Lato', sans-serif;
     text-align: center;

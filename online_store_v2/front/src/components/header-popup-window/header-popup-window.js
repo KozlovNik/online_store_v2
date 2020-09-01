@@ -8,9 +8,8 @@ const HeaderPopupWindow = () => {
 
   return (
     <div
-      className={classNames({
+      className={classNames("header-popup-window", {
         "header-popup-window--hide": hidePopup,
-        "header-popup-window":true
       })}
     >
       <div className="header-popup-window__wrapper">
