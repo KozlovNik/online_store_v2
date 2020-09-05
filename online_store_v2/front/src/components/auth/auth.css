@@ -1,25 +1,27 @@
 .auth-list {
-    display: flex;
-    justify-content: space-between;
-    list-style: none;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  flex-wrap: wrap;
 }
 
-.auth-list__button {
-    background-color: #ff755d;
-    color: white;
-    font: 14px 'Lago', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 3px;
-    border: none;
-    text-decoration: none;
-}
+@media screen and (max-width: 800px) {
+  .auth-list {
+    z-index: 3;
+    background-color: #fff;
+    top: 0;
+    left: 0;
+    width: 100%;
+    top: 0;
+    display: block;
+    position: absolute;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-out;
+    max-height: 500px;
+  }
 
-.auth-list__button:focus {
-    outline: none
-}
-
-.auth-list__button--reg {
-    background-color: #779750;
+  .auth-list--hidden {
+    max-height: 0px;
+    overflow: hidden;
+  }
 }

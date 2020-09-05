@@ -1,0 +1,41 @@
+.profile-block {
+  top: 0;
+  width: 100%;
+  background-color: white;
+  width: 160px;
+}
+
+.profile-block__image {
+  display: none;
+}
+
+.profile-block__link {
+  width: 150px;
+  color: #616161;
+  display: block;
+  text-decoration: underline dotted #616161;
+  font: 14px "Century Gothic";
+  padding-top: 5px;
+}
+
+.profile-block__link:hover {
+  color: rgba(255, 67, 54, 0.98);
+  text-decoration: underline dotted rgba(255, 67, 54, 0.98);
+}
+
+@media screen and (max-width: 800px) {
+  .profile-block__image {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 60px;
+    width: 25px;
+    height: 25px;
+  }
+
+  .profile-block__link {
+    margin: 5px;
+    margin-left: 10px;
+  }
+}

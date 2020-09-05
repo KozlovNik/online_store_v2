@@ -1,59 +1,100 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useRef, useEffect } from "react";
 
-import { connect } from 'react-redux';
-import { setLoginModalWindow, logout } from '../../redux/actions';
+import { connect } from "react-redux";
+import { setLoginModalWindow, logout } from "../../redux/actions";
 
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
-import './auth.css';
+import LabelBlock from "../label-block";
+import GenericButton from "../generic-button";
 
-const Auth = ({ setLoginModalWindow, isAuthenticated, isLoading, logout }) => {
+import classNames from "classnames";
 
-    const handleLoginButtonClick = e => {
-        e.preventDefault();
-        setLoginModalWindow(true);
-    }
+import "./auth.css";
 
-    const handleLogoutButtonCLick = e => {
-        logout()
-        e.preventDefault()
-    }
+const Auth = ({
+  setLoginModalWindow,
+  isAuthenticated,
+  isLoading,
+  logout,
+  isClose,
+  setIsClose,
+}) => {
+  const auth = useRef();
+  const label = useRef();
 
-    let authValue
+  useEffect(() => {
+    let maybeHandler = (event) => {
+      if (event.target !== auth.current && event.target !== label.current) {
+        setIsClose(true);
+      }
+    };
 
-    if (isAuthenticated) {
-        authValue = (
-            <li className="auth-list__item">
-                <button
-                    className="auth-list__button"
-                    onClick={handleLogoutButtonCLick}>Выйти</button>
-            </li>
-        )
-    } else if (!isAuthenticated && !isLoading) {
-        authValue = (
-            <Fragment>
-                <li className="auth-list__item">
-                    <button
-                        className="auth-list__button"
-                        onClick={handleLoginButtonClick}>Вход</button>
-                </li>
-                <li className="auth-list__item">
-                    <Link to="/register">
-                        <button className="auth-list__button auth-list__button--reg">
-                            Регистрация
-                        </button>
-                    </Link>
-                </li>
-            </Fragment>
-        )
-    }
+    document.addEventListener("mouseup", maybeHandler);
 
-    return <ul className="auth-list">{authValue}</ul>
-}
+    return () => {
+      document.removeEventListener("mouseup", maybeHandler);
+    };
+  });
 
-const mapStateToProps = state => {
-    const { isLoading, isAuthenticated } = state.auth
-    return { isLoading, isAuthenticated }
-}
+  const handleLoginButtonClick = (e) => {
+    e.preventDefault();
+    setLoginModalWindow(true);
+  };
+
+  const handleLogoutButtonCLick = (e) => {
+    logout();
+    e.preventDefault();
+  };
+
+  let authValue;
+
+  if (isAuthenticated) {
+    authValue = (
+      <GenericButton
+        clsName="orange"
+        label="Выйти"
+        handleClick={handleLogoutButtonCLick}
+      />
+    );
+  } else if (!isAuthenticated && !isLoading) {
+    authValue = (
+      <Fragment>
+        <GenericButton
+          clsName="orange"
+          label="Вход"
+          handleClick={handleLoginButtonClick}
+        />
+        <Link to="/register">
+          <GenericButton clsName="green" label="Регистрация" />
+        </Link>
+      </Fragment>
+    );
+  }
+
+  return (
+    <div
+      ref={auth}
+      className={classNames("auth-list", {
+        "auth-list--hidden": isClose,
+      })}
+    >
+      <LabelBlock ref={label} label="Личный кабинет" handleClick={setIsClose} />
+      {authValue}
+      <a href="#" className="profile-block__link">
+        Вы недавно смотрели
+      </a>
+
+      <a href="" className="profile-block__link">
+        Мои закладки: <span></span>
+      </a>
+    </div>
+  );
+};
+
+const mapStateToProps = (state) => {
+  const { isLoading, isAuthenticated } = state.auth;
+  return { isLoading, isAuthenticated };
+};
 
 export default connect(mapStateToProps, { setLoginModalWindow, logout })(Auth);

@@ -32,7 +32,7 @@
     position: fixed;
     background-color: rgba(24, 21, 21, 0.24);
     opacity:1;
-    transition:visibility 0.25s linear, opacity 0.25s ease-out;
+    transition:visibility 0.2s linear, opacity 0.25s ease-out;
 }
 
 .modal-login-layout--hidden {

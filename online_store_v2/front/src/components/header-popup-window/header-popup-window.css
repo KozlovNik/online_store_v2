@@ -59,3 +59,9 @@
 .header-popup-window__close-button:after {
   transform: rotate(-45deg);
 }
+
+@media screen and (max-width: 1000px) {
+  .header-popup-window__wrapper {
+    width: 100%;
+  }
+}

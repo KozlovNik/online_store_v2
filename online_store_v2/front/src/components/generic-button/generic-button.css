@@ -1,0 +1,32 @@
+.generic-button {
+  min-width: 45px;
+  max-width: 100px;
+  max-height: 25px;
+  color: white;
+  font: 14px "Lago", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 3px;
+  border: none;
+  text-decoration: none;
+}
+
+.generic-button:focus {
+  outline: none;
+}
+
+.generic-button__orange {
+  background-color: #ff755d;
+}
+
+.generic-button__green {
+  background-color: #779750;
+}
+
+@media screen and (max-width: 800px) {
+  .generic-button {
+      margin: 5px;
+      margin-left: 10px;
+  }
+}

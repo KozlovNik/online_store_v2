@@ -12,6 +12,25 @@
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
+  <script>
+    (function() { 
+        const classes = document.body.classList;
+        let timer = 0;
+        window.addEventListener('resize', function () {
+            if (timer) {
+                clearTimeout(timer);
+                timer = null;
+            }
+            else
+                classes.add('stop-transitions');
+
+            timer = setTimeout(() => {
+                classes.remove('stop-transitions');
+                timer = null;
+            }, 100);
+        });
+    })();
+</script>
 </body>
 
 </html>
