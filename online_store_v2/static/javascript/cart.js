@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
     // Ajax запрос на добавление товара в корзину
-    let addToCartItems = document.getElementsByClassName('add-to-cart');
-    Array.from(addToCartItems).forEach(function (element) {
+    let addCartItemItems = document.getElementsByClassName('add-to-cart');
+    Array.from(addCartItemItems).forEach(function (element) {
         element.addEventListener('click', function (event) {
             if (this.getAttribute('class') === 'add-to-cart--added') {
                 return;

@@ -81,11 +81,11 @@ const Auth = ({
     >
       <LabelBlock ref={label} label="Личный кабинет" handleClick={setIsClose} />
       {authValue}
-      <a href="#" className="profile-block__link">
+      <a href="/#" className="profile-block__link">
         Вы недавно смотрели
       </a>
 
-      <a href="" className="profile-block__link">
+      <a href="/#" className="profile-block__link">
         Мои закладки: <span></span>
       </a>
     </div>

@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect } from "react";
 
-import Sidebar from '../sidebar';
+import Sidebar from "../sidebar";
+import { useParams } from "react-router-dom";
 
-import './product-page.css';
+import "./product-page.css";
 
 const ProductPage = () => {
-    return (
-        <Sidebar />
-    );
-}
+  return (
+    <div className="product-page">
+      <Sidebar />
+      
+    </div>
+  );
+};
 
-export default ProductPage
+const mapStateToProps = (state) => {
+  return {
+    products: state.products.products,
+  };
+};
+
+export default ProductPage;

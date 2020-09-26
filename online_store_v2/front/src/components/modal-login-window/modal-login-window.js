@@ -30,7 +30,7 @@ const ModalLoginWindow = ({ loginPopup, setLoginModalWindow, errors }) => {
         <div className="modal-login-window__wrapper">
           <p className="modal-login-window__title">АВТОРИЗАЦИЯ</p>
           <p className="modal-login-window__errors">
-            {errors && errors.map((el, ind) => <span key={ind}>{el[0]}</span>)}
+            {errors && errors.map((el, ind) => <span key={ind}>{el}</span>)}
           </p>
           <LoginForm />
           <button className="login-form__button login-form__button--register">

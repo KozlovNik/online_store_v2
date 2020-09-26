@@ -49,11 +49,6 @@ html {
     justify-content: space-between;
 }
 
-.content-wrapper {
-    width: 960px;
-    margin: 20px auto 0;
-}
-
 .catalog-wrapper {
     width: 800px;
     display: flex;

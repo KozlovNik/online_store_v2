@@ -15,6 +15,7 @@ const ProfileBlock = () => {
         }}
         className="profile-block__image"
         src="http://localhost:8000/static/store_app/profile.png"
+        alt="profile"
       />
       <Auth
         isClose={isClose}

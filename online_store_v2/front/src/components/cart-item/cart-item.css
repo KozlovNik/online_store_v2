@@ -1,0 +1,54 @@
+.cart-item {
+  padding: 20px;
+  display: flex;
+  border-bottom: 1px solid rgb(170, 169, 169);
+}
+
+.cart-item__block {
+  margin: 5px;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.cart-item__name {
+  font: 16px "Century Gothic", sans-serif;
+  cursor: pointer;
+}
+
+.cart-item__name:hover {
+  color: #db5657;
+}
+
+.cart-item__image {
+  height: 110px;
+  width: 110px;
+}
+
+.cart-action {
+  color: #979797;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.cart-action__link {
+  color: #979797;
+}
+
+.cart-action__link:hover {
+  color: #1e7e34;
+}
+
+@media screen and (max-width: 640px) {
+  .cart-item {
+    flex-direction: column;
+    padding: 40px;
+  }
+
+  .cart-item__block {
+    order: 2;
+  }
+
+  .cart-item__block--title {
+    order: 1;
+  }
+}

@@ -20,7 +20,7 @@ const navbar = [
 const HeaderMainPart = () => {
   const [hideNav, setHideNav] = useState(true);
 
-  const handleCloseButtonClick = () => {
+  const handleClick = () => {
     setHideNav(() => true);
   };
 
@@ -70,14 +70,14 @@ const HeaderMainPart = () => {
             <ProfileBlock />
             <div className="right-side__item right-side__item--cart">
               <p className="cart">
-                <a className="cart__link" href="">
+                <Link to="/cart" className="cart__link">
                   <img
                     className="cart__image"
                     src="http://localhost:8000/static/store_app/cart.png"
                     alt=""
                   />
                   <span className="cart__label">КОРЗИНА</span>
-                </a>
+                </Link>
               </p>
               <div className="cart-order__wrapper">
                 <div>
@@ -109,7 +109,7 @@ const HeaderMainPart = () => {
           </div>
         </div>
         <ul className={classNames("navbar", { "navbar--hidden": hideNav })}>
-          <LabelBlock label="Меню" handleClick={handleCloseButtonClick} />
+          <LabelBlock label="Меню" handleClick={handleClick} />
           {navbarEls}
         </ul>
       </nav>

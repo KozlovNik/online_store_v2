@@ -68,3 +68,37 @@ def pre_save_slug_field(sender, instance, *args, **kwargs):
 
 pre_save.connect(pre_save_slug_field, sender=Category)
 pre_save.connect(pre_save_slug_field, sender=Product)
+
+class Cart(models.Model):
+    items = models.ManyToManyField(CartItem, blank=True)
+
+    def add_to_cart(self, product_slug):
+        product = Product.objects.get(slug=product_slug)
+        for item in self.items.all():
+            if item.product.name == product.name:
+                return
+        new_item = CartItem(product=product, item_total=product.price)
+        new_item.save()
+        self.items.add(new_item)
+        self.save()
+        return new_item
+
+
+ORDER_STATUS_CHOICES = (
+    ('Принят в обработку', 'Принят в обработку'),
+    ('Выполняется', 'Выполняется'),
+    ('Оплачен', 'Оплачен')
+)
+
+
+class Order(models.Model):
+    first_name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    cart = models.OneToOneField(Cart, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+    comments = models.TextField(blank=True, null=True)
+    buying_type = models.CharField(max_length=40,
+                                   choices=(('Самовывоз', 'Самовывоз'), ('Доставка', 'Доставка')),
+                                   default='Самовывоз')
+    address = models.CharField(max_length=250, blank=True)
+    status = models.CharField(max_length=100, choices=ORDER_STATUS_CHOICES)
