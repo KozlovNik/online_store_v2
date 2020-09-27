@@ -44,6 +44,16 @@ class AddAPIView(APIView):
         cartItem.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    def put(self, request, id, format=None):
+        cartItem = CartItem.objects.get(id=id)
+        quantity = request.query_params.get('quantity', None)
+        cartItem.quantity = quantity
+        price = cartItem.product.price
+        cartItem.item_total = price * int(quantity)
+        cartItem.save()
+        serializer = CartItemSerializer(cartItem,context={'request': request})
+        return Response(serializer.data)
+
 
 
 class ProductAPIView(generics.ListAPIView):

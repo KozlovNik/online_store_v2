@@ -1,19 +1,19 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
-import { setLoginModalWindow } from '../../redux/actions';
+
+import { setModalWindow } from '../../redux/actions';
 
 import './login-close-button.css';
 
-const LoginCLoseButton = ({ setLoginModalWindow }) => {
+const LoginCLoseButton = ({ setModalWindow }) => {
     return (
         <div
             className="flag"
-            onClick={() => setLoginModalWindow(false)}>
+            onClick={() => setModalWindow(false)}>
             <div className="popup-login-window__close-button">
             </div>
         </div>
     )
 }
 
-export default connect(null, { setLoginModalWindow })(LoginCLoseButton);
+export default connect(null, { setModalWindow })(LoginCLoseButton);

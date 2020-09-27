@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import classNames from "classnames";
 
 import "./header-main-part.css";
+
+import { connect } from "react-redux";
+import { getCartTotal } from "../../redux/reducers/selectors";
 import { Link } from "react-router-dom";
 import LabelBlock from "../label-block";
 import ProfileBlock from "../profile-block";
@@ -17,7 +20,7 @@ const navbar = [
   { title: "Контакты", link: "/contacts" },
 ];
 
-const HeaderMainPart = () => {
+const HeaderMainPart = ({ quantity, totalSum }) => {
   const [hideNav, setHideNav] = useState(true);
 
   const handleClick = () => {
@@ -28,7 +31,7 @@ const HeaderMainPart = () => {
     const { title, link } = el;
     return (
       <li key={title} className="navbar__item">
-        <Link to={link} className="navbar__link">
+        <Link to={link} className="navbar__link" onClick={setHideNav}>
           {title}
         </Link>
       </li>
@@ -79,20 +82,14 @@ const HeaderMainPart = () => {
                   <span className="cart__label">КОРЗИНА</span>
                 </Link>
               </p>
-              <div className="cart-order__wrapper">
-                <div>
-                  <p className="cart__paragraph">
-                    Товаров:
-                    <span id="cart_count"></span> шт.
-                  </p>
-                  <p className="cart__paragraph">
-                    Сумма: <span id="cart-total-sum"></span> руб.
-                  </p>
+              {quantity > 0 && (
+                <div className="cart-order__wrapper">
+                  <div>
+                    <p className="cart__paragraph">Товаров: {quantity} шт.</p>
+                    <p className="cart__paragraph">Сумма: {totalSum} руб.</p>
+                  </div>
                 </div>
-                <p id="cart__order-button" className="cart__order-button">
-                  <span className="">Оформить заказ</span>
-                </p>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -117,4 +114,8 @@ const HeaderMainPart = () => {
   );
 };
 
-export default HeaderMainPart;
+const mapStateToProps = (state) => {
+  return { ...getCartTotal(state) };
+};
+
+export default connect(mapStateToProps)(HeaderMainPart);

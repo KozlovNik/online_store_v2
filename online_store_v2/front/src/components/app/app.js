@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
+
 import { getUser, getCartItems } from "../../redux/actions";
 
 import Header from "../header";
@@ -9,8 +10,6 @@ import RegisterPage from "../register-page";
 import SliderPage from "../slider-page";
 import ProductPage from "../product-page";
 import CartPage from "../cart-page";
-
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./app.css";
 

@@ -1,19 +1,17 @@
 import React, { Fragment, useRef, useEffect } from "react";
-
-import { connect } from "react-redux";
-import { setLoginModalWindow, logout } from "../../redux/actions";
-
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import classNames from "classnames";
+
+import { setModalWindow, logout } from "../../redux/actions";
 
 import LabelBlock from "../label-block";
 import GenericButton from "../generic-button";
 
-import classNames from "classnames";
-
 import "./auth.css";
 
 const Auth = ({
-  setLoginModalWindow,
+  setModalWindow,
   isAuthenticated,
   isLoading,
   logout,
@@ -39,7 +37,7 @@ const Auth = ({
 
   const handleLoginButtonClick = (e) => {
     e.preventDefault();
-    setLoginModalWindow(true);
+    setModalWindow(true);
   };
 
   const handleLogoutButtonCLick = (e) => {
@@ -97,4 +95,4 @@ const mapStateToProps = (state) => {
   return { isLoading, isAuthenticated };
 };
 
-export default connect(mapStateToProps, { setLoginModalWindow, logout })(Auth);
+export default connect(mapStateToProps, { setModalWindow, logout })(Auth);

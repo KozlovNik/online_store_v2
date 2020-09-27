@@ -1,7 +1,7 @@
 import React from "react";
 
 import { connect } from "react-redux";
-import { deleteCartItem } from "../../redux/actions";
+import { deleteCartItem, updateCartItem } from "../../redux/actions";
 
 import "./cart-item.css";
 
@@ -11,6 +11,7 @@ const CartItem = (props) => {
     quantity,
     item_total,
     deleteCartItem,
+    updateCartItem,
     product: { name, image },
   } = props;
 
@@ -18,6 +19,11 @@ const CartItem = (props) => {
     e.preventDefault();
     deleteCartItem(id);
   };
+
+  const handleChange = (e) => {
+    const quantity = e.target.value
+    updateCartItem(id, quantity)
+  }
 
   return (
     <section className="cart-item">
@@ -42,6 +48,7 @@ const CartItem = (props) => {
           value={quantity}
           min="1"
           max="100"
+          onChange={handleChange}
         />
       </div>
       <div className="cart-item__block">
@@ -51,4 +58,4 @@ const CartItem = (props) => {
   );
 };
 
-export default connect(null, { deleteCartItem })(CartItem);
+export default connect(null, { deleteCartItem, updateCartItem })(CartItem);

@@ -4,18 +4,18 @@ import LoginForm from "../login-form";
 import LoginCLoseButton from "../login-close-button";
 
 import { connect } from "react-redux";
-import { setLoginModalWindow } from "../../redux/actions";
+import { setModalWindow } from "../../redux/actions";
 
 import classNames from "classnames";
 
 import "./modal-login-window.css";
 
-const ModalLoginWindow = ({ loginPopup, setLoginModalWindow, errors }) => {
+const ModalLoginWindow = ({ loginPopup, setModalWindow, errors }) => {
   const layoutRef = useRef();
 
   const handleLayoutClick = (e) => {
     if (e.target === layoutRef.current) {
-      setLoginModalWindow(false);
+      setModalWindow(false);
     }
   };
 
@@ -47,6 +47,6 @@ const mapStateToProps = (state) => ({
   errors: state.auth.errors,
 });
 
-export default connect(mapStateToProps, { setLoginModalWindow })(
+export default connect(mapStateToProps, { setModalWindow })(
   ModalLoginWindow
 );

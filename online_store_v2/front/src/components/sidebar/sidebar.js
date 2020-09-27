@@ -1,43 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 
-import Products from "../products";
+import { Link } from "react-router-dom";
+import classNames from "classnames";
 
 import "./sidebar.css";
-import {
-  Link,
-  HashRouter as Router,
-  Route,
-  Switch,
-  useRouteMatch,
-} from "react-router-dom";
 
-const Sidebar = () => {
-  let { path, url } = useRouteMatch();
+const Sidebar = ({ url }) => {
+  const [isHidden, setIsHidden] = useState(true);
 
   return (
-    <Router>
-      <nav className="sidebar">
-        <h3 className="sidebar__header">Категории</h3>
-        <ul className="sidebar__list">
-          <li className="sidebar__item">
-            <Link className="sidebar__link" to={`${url}/napitki`}>
-              Напитки
-            </Link>
-          </li>
-          <li className="sidebar__item">
-            <Link className="sidebar__link" to={`${url}/poleznyj-zavtrak`}>
-              Полезный завтрак
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <div>
-        <Switch>
-          <Route exact path={`${path}/`} component={Products} />
-          <Route path={`${path}/:category`} component={Products} />
-        </Switch>
-      </div>
-    </Router>
+    <nav className="sidebar">
+      <h3
+        className="sidebar__header"
+        onClick={() => setIsHidden((isHidden) => !isHidden)}
+      >
+        Категории{" "}
+        <span
+          className={classNames("sidebar__header-arrow", {
+            "sidebar__header-arrow--reverse": isHidden,
+          })}
+        ></span>
+      </h3>
+      <ul
+        className={classNames("sidebar__list", {
+          "sidebar__list--hidden": isHidden,
+        })}
+      >
+        <li className="sidebar__item">
+          <Link className="sidebar__link" to={`${url}/napitki`}>
+            Напитки
+          </Link>
+        </li>
+        <li className="sidebar__item">
+          <Link className="sidebar__link" to={`${url}/poleznyj-zavtrak`}>
+            Полезный завтрак
+          </Link>
+        </li>
+      </ul>
+    </nav>
   );
 };
 

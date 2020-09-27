@@ -1,23 +1,30 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-import Sidebar from "../sidebar";
-import { useParams } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+  useRouteMatch,
+} from "react-router-dom";
+
+import Products from "../products";
+import Sidebar from "../sidebar/sidebar";
 
 import "./product-page.css";
 
 const ProductPage = () => {
+  let { path, url } = useRouteMatch();
   return (
     <div className="product-page">
-      <Sidebar />
-      
+      <Router>
+        <Sidebar url={url} />
+        <Switch>
+          <Route exact path={`${path}/`} component={Products} />
+          <Route path={`${path}/:category`} component={Products} />
+        </Switch>
+      </Router>
     </div>
   );
-};
-
-const mapStateToProps = (state) => {
-  return {
-    products: state.products.products,
-  };
 };
 
 export default ProductPage;

@@ -143,35 +143,6 @@
   font: 10px "Lato", sans-serif;
 }
 
-.cart__order-button {
-  display: none;
-  text-align: center;
-  font: 12px "Century Gothic";
-  color: white;
-  border-radius: 3px;
-  width: 80px;
-  height: 40px;
-  position: relative;
-  background: #779750;
-}
-
-.cart__order-button:before {
-  content: "";
-  position: absolute;
-  right: -12px;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 13px solid #779750;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-}
-
-.cart__order-button span {
-  display: inline-block;
-  padding-top: 5px;
-}
-
 .header-lower-part__button {
   display: none;
 }
@@ -282,7 +253,7 @@
   }
 
   .navbar {
-    position: absolute;
+    position: fixed;
     z-index: 3;
     background-color: white;
     width: 100%;

@@ -9,6 +9,7 @@ import {
   DELETE_FROM_CART_FAILURE,
   DELETE_FROM_CART_REQUEST,
   DELETE_FROM_CART_SUCCESS,
+  UPDATE_CART_ITEM_SUCCESS,
 } from "../action-types";
 
 const initialState = {
@@ -49,6 +50,16 @@ export default function products(state = initialState, action) {
         cartItems: state.cartItems.filter(
           (item) => item.id !== action.payload.id
         ),
+      };
+    case UPDATE_CART_ITEM_SUCCESS:
+      return {
+        ...state,
+        cartItems: state.cartItems.map((item) => {
+          if ((item.id === action.payload.cartItem.id)) {
+            return action.payload.cartItem;
+          }
+          return item;
+        }),
       };
     default:
       return state;

@@ -22,12 +22,15 @@ import {
   DELETE_FROM_CART_FAILURE,
   DELETE_FROM_CART_REQUEST,
   DELETE_FROM_CART_SUCCESS,
+  UPDATE_CART_ITEM_REQUEST,
+  UPDATE_CART_ITEM_FAILURE, 
+  UPDATE_CART_ITEM_SUCCESS
 } from "../redux/action-types";
 import axios from "axios";
 
 const link = "http://127.0.0.1:8000/api/";
 
-export const setLoginModalWindow = (data) => ({
+export const setModalWindow = (data) => ({
   type: SET_LOGIN_MODAL_WINDOW,
   payload: data,
 });
@@ -62,7 +65,7 @@ export const login = () => (dispatch, getState) => {
     .post(`${link}accounts/login/`, user)
     .then((res) => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-      dispatch(setLoginModalWindow(false));
+      dispatch(setModalWindow(false));
     })
     .catch((err) => {
       try {
@@ -176,4 +179,18 @@ export const deleteCartItem = (id) => (dispatch) => {
   axios.delete(`${link}cart-items/${id}`).then(() => {
     dispatch({ type: DELETE_FROM_CART_SUCCESS, payload: { id } });
   });
+};
+
+export const updateCartItem = (id, quantity) => (dispatch) => {
+  dispatch({ type: UPDATE_CART_ITEM_REQUEST });
+
+  axios
+    .put(`${link}cart-items/${id}`, null, {
+      params: {
+        quantity,
+      },
+    })
+    .then((res) => {
+      dispatch({ type: UPDATE_CART_ITEM_SUCCESS, payload: { cartItem: res.data } });
+    });
 };
