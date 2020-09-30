@@ -69,3 +69,14 @@ class ProductAPIView(generics.ListAPIView):
         except:
             pass
         return queryset
+
+
+class ProductDetailAPIView(generics.RetrieveAPIView):
+    # serializer_class = ProductSerializer
+    def get(self, request, slug, format=None):
+        try:
+            product = Product.objects.get(slug=slug)
+            serializer = ProductSerializer(product,context={'request': request})
+        except:
+            return Response(None)
+        return Response(serializer.data)

@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 
 import "./products.css";
 
+import AddToCart from "../add-to-cart";
+
 import { useParams, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getProducts, addCartItem } from "../../redux/actions";
+import { getProducts } from "../../redux/actions";
 
-const Products = ({ productsByCategory, getProducts, addCartItem, items }) => {
+const Products = ({ productsByCategory, getProducts }) => {
   let { category } = useParams();
 
   useEffect(() => {
@@ -15,32 +17,30 @@ const Products = ({ productsByCategory, getProducts, addCartItem, items }) => {
 
   return (
     <div className="catalog-wrapper">
-      {productsByCategory.map(({ image, name, price, slug }) => {
+      {productsByCategory.map(({ image, name, price, slug, category }) => {
         return (
           <div className="product" key={slug}>
             <div className="product__image-wrapper">
-              <a className="product__image-link">
+              <Link
+                to={`/products/${category.slug}/${slug}`}
+                className="product__image-link"
+              >
                 <img src={image} className="product__image" alt="" />
-              </a>
+              </Link>
             </div>
             <div className="product__rating"></div>
             <div className="product__title">
-              <a className="product__title-link">{name}</a>
+              <Link
+                to={`/products/${category.slug}/${slug}`}
+                className="product__title-link"
+              >
+                {name}
+              </Link>
             </div>
             <div className="product__price">
               <b>{price} рублей</b>
             </div>
-            <div className="add-to-cart-button">
-              {items.indexOf(slug) > -1 ? (
-                <Link to="/cart" className="add-to-cart">
-                  Перейти в корзину
-                </Link>
-              ) : (
-                <a className="add-to-cart" onClick={() => addCartItem(slug)}>
-                  Добавить
-                </a>
-              )}
-            </div>
+            <AddToCart slug={slug} />
           </div>
         );
       })}
@@ -49,14 +49,9 @@ const Products = ({ productsByCategory, getProducts, addCartItem, items }) => {
 };
 
 const mapStateToProps = (state) => {
-  let { productsByCategory, cartItems } = state.products;
-  cartItems = cartItems.map((item) => item.product.slug);
   return {
-    productsByCategory,
-    items: cartItems,
+    productsByCategory: state.products.productsByCategory,
   };
 };
 
-export default connect(mapStateToProps, { getProducts, addCartItem })(
-  Products
-);
+export default connect(mapStateToProps, { getProducts })(Products);

@@ -2,12 +2,18 @@ from rest_framework import serializers
 
 from .models import Category, Product, Cart, CartItem
 
+class CategorySerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Category
+        fields = ['name', 'slug']
 
 class ProductSerializer(serializers.ModelSerializer):
+    category = CategorySerializer()
     class Meta:
         model = Product
-        fields = ['name','slug','image','price']
+        # fields = ['name','slug','image','price']
+        fields = '__all__'
 
 class CartItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
@@ -42,10 +48,5 @@ class CartSerializer(serializers.ModelSerializer):
     #     return queryset
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=True, read_only=True)
 
-    class Meta:
-        model = Category
-        fields = ['name', 'slug', 'products']
 

@@ -1,0 +1,14 @@
+.breadcrumbs {
+  padding: 0 0 40px 40px;
+  font: 14px "Lato";
+  color: #b4b4b4;
+}
+
+.breadcrumbs__item {
+  text-decoration: underline dotted;
+  color: #b4b4b4;
+}
+
+.breadcrumbs__item:hover {
+  color: #909090;
+}

@@ -1,0 +1,18 @@
+.add-to-cart {
+  width: 100%;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #7ac143;
+  font-size: 20px;
+  font-family: "PT Sans", sans-serif;
+  height: 45px;
+  line-height: 45px;
+  text-decoration: none;
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+}
+
+.add-to-cart:hover {
+  background-color: #008b44;
+}

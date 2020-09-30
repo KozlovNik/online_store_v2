@@ -8,7 +8,8 @@ import {
 } from "react-router-dom";
 
 import Products from "../products";
-import Sidebar from "../sidebar/sidebar";
+import Product from "../product";
+import Sidebar from "../sidebar";
 
 import "./product-page.css";
 
@@ -17,10 +18,18 @@ const ProductPage = () => {
   return (
     <div className="product-page">
       <Router>
-        <Sidebar url={url} />
         <Switch>
-          <Route exact path={`${path}/`} component={Products} />
-          <Route path={`${path}/:category`} component={Products} />
+          <Route exact path={`${path}/`}>
+            <Sidebar url={url} />
+            <Products />
+          </Route>
+
+          <Route exact path={`${path}/:category`}>
+            <Sidebar url={url} />
+            <Products />
+          </Route>
+
+          <Route path={`${path}/:category/:product`} component={Product} />
         </Switch>
       </Router>
     </div>
