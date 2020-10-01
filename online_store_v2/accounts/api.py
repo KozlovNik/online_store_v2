@@ -1,10 +1,32 @@
 from .models import User
+from store_app.models import Product
+from store_app.serializers import ProductIdSerializer
 from rest_framework import serializers
 from .serializers import LoginSerializer, UserSerializer, RegisterSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from rest_framework.response import Response
 from knox.models import AuthToken
+
+class LikesAPIView(generics.GenericAPIView):
+    serializer_class = UserSerializer
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        id = self.request.query_params.get('id', None)
+        product = Product.objects.get(id=id)
+        product.users.add(self.request.user)
+        product.save()
+        serializer = ProductIdSerializer(product)
+        return Response(serializer.data)
+
+    def delete(self, request, *args, **kwargs):
+        id = self.request.query_params.get('id', None)
+        product = Product.objects.get(id=id)
+        product.users.remove(self.request.user)
+        product.save()
+        return Response({})
 
 
 class UserAPIView(generics.GenericAPIView):
@@ -27,7 +49,7 @@ class LoginView(generics.GenericAPIView):
         user = serializer.validated_data
         return Response({
             "user": UserSerializer(user).data,
-            # "token": AuthToken.objects.create(user)[1]
+            "token": AuthToken.objects.create(user)[1]
         })
 
 class RegisterView(generics.GenericAPIView):

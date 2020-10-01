@@ -45,6 +45,13 @@ const Auth = ({
     e.preventDefault();
   };
 
+  const handleLikesButtonClick = (e) => {
+    if (!isAuthenticated) {
+      e.preventDefault();
+      setModalWindow(true);
+    }
+  };
+
   let authValue;
 
   if (isAuthenticated) {
@@ -83,7 +90,11 @@ const Auth = ({
         Вы недавно смотрели
       </a>
 
-      <a href="/#" className="profile-block__link">
+      <a
+        onClick={handleLikesButtonClick}
+        href="/#"
+        className="profile-block__link"
+      >
         Мои закладки: <span></span>
       </a>
     </div>

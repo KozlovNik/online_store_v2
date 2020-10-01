@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import classNames from "classnames";
+import { connect } from "react-redux";
+
+import { addToLikes, deleteFromLikes } from "../../redux/actions";
 
 import AddToCart from "../add-to-cart";
 import Breadcrumbs from "../breadcrumbs";
 
 import "./product.css";
 
-const Product = () => {
+const Product = ({ likes, addToLikes, deleteFromLikes }) => {
   const { category, product } = useParams();
   const [productInfo, setProductInfo] = useState();
 
@@ -23,6 +26,7 @@ const Product = () => {
   if (!productInfo) return null;
 
   const {
+    id,
     image,
     name,
     available,
@@ -30,6 +34,10 @@ const Product = () => {
     slug,
     category: categoryInfo,
   } = productInfo;
+
+  const handleClick = () => {
+    addToLikes(id);
+  };
 
   return (
     <div>
@@ -40,20 +48,27 @@ const Product = () => {
         </div>
         <div className="product-main">
           <div className="product-main__wrapper">
-            <div >
+            <div>
               <h1 className="product-card__title">{name}</h1>
-              <a className="add-to-favorites add-to-favorites--active">
-                Добавить в избранное
-              </a>
+              {likes.indexOf(id) > -1 ? (
+                <a
+                  className="add-to-favorites add-to-favorites--active"
+                  onClick={() => deleteFromLikes(id)}
+                >
+                  Удалить из избранного
+                </a>
+              ) : (
+                <a onClick={() => addToLikes(id)} className="add-to-favorites">
+                  Добавить в избранное
+                </a>
+              )}
             </div>
             <div className="product-card__product-buy product-buy">
               <div className="product-card__price-wrapper">
                 <p className="product-buy__price">{price} руб.</p>
-                {available ? (
-                  <p className="product-buy__available">В наличии</p>
-                ) : (
-                  <p className="product-buy__available">Нет в наличии</p>
-                )}
+                <p className="product-buy__available">
+                  {available ? "В наличии" : "Нет в наличии"}
+                </p>
               </div>
               <div className="product-card__text">
                 <p>Доставка в г. Москва:</p>
@@ -88,10 +103,7 @@ const Product = () => {
             </span>
           </div>
           <p className="about-sections">
-            {
-              activeTab === 0 ? productInfo.description : 'hello'
-            }
-            
+            {activeTab === 0 ? productInfo.description : "hello"}
           </p>
         </section>
       </div>
@@ -99,4 +111,10 @@ const Product = () => {
   );
 };
 
-export default Product;
+const mapStateToProps = (state) => {
+  return { likes: state.auth.user.likes };
+};
+
+export default connect(mapStateToProps, { addToLikes, deleteFromLikes })(
+  Product
+);

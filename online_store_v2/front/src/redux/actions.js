@@ -23,8 +23,14 @@ import {
   DELETE_FROM_CART_REQUEST,
   DELETE_FROM_CART_SUCCESS,
   UPDATE_CART_ITEM_REQUEST,
-  UPDATE_CART_ITEM_FAILURE, 
-  UPDATE_CART_ITEM_SUCCESS
+  UPDATE_CART_ITEM_FAILURE,
+  UPDATE_CART_ITEM_SUCCESS,
+  ADD_TO_LIKES_FAILURE,
+  ADD_TO_LIKES_REQUEST,
+  ADD_TO_LIKES_SUCCESS,
+  DELETE_FROM_LIKES_FAILURE,
+  DELETE_FROM_LIKES_REQUEST,
+  DELETE_FROM_LIKES_SUCCESS,
 } from "../redux/action-types";
 import axios from "axios";
 
@@ -49,7 +55,9 @@ export const getUser = () => (dispatch) => {
         Authorization: `token ${token}`,
       },
     })
-    .then((res) => dispatch({ type: GET_USER_LOADED, payload: res.data }))
+    .then((res) => {
+      dispatch({ type: GET_USER_LOADED, payload: res.data });
+    })
     .catch(() => dispatch({ type: GET_USER_FAILURE }));
 };
 
@@ -76,6 +84,43 @@ export const login = () => (dispatch, getState) => {
           payload: errorsObj,
         });
       } catch (e) {}
+    });
+};
+
+export const addToLikes = (id) => (dispatch) => {
+  const token = localStorage.getItem("token");
+  dispatch({ type: ADD_TO_LIKES_REQUEST });
+
+  axios
+    .post(`${link}likes/`, null, {
+      params: {
+        id,
+      },
+      headers: {
+        Authorization: `token ${token}`,
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+      dispatch({ type: ADD_TO_LIKES_SUCCESS, payload: { id: res.data.id } });
+    });
+};
+
+export const deleteFromLikes = (id) => (dispatch) => {
+  const token = localStorage.getItem("token");
+  dispatch({ type: DELETE_FROM_LIKES_REQUEST });
+
+  axios
+    .delete(`${link}likes/`, {
+      params: {
+        id,
+      },
+      headers: {
+        Authorization: `token ${token}`,
+      },
+    })
+    .then(() => {
+      dispatch({ type: DELETE_FROM_LIKES_SUCCESS, payload: { id } });
     });
 };
 
@@ -191,6 +236,9 @@ export const updateCartItem = (id, quantity) => (dispatch) => {
       },
     })
     .then((res) => {
-      dispatch({ type: UPDATE_CART_ITEM_SUCCESS, payload: { cartItem: res.data } });
+      dispatch({
+        type: UPDATE_CART_ITEM_SUCCESS,
+        payload: { cartItem: res.data },
+      });
     });
 };

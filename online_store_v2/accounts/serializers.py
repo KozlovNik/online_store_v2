@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email']
+        fields = ['id', 'email', 'likes']
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -27,6 +27,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         if data['password'] != data['password2']:
             raise serializers.ValidationError("Несовпадение пароля")
         return data
+
+# class ProductIdSerialiser(serializers.Serializer):
+#     class Meta:
+#         model = Product
+#         fields = 
 
 
 class LoginSerializer(serializers.Serializer):

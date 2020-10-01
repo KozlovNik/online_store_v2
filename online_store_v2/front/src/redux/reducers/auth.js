@@ -10,6 +10,10 @@ import {
   REGISTER_REQUEST,
   LOGOUT_FAILURE,
   SET_LOGIN_DATA,
+  ADD_TO_LIKES_SUCCESS,
+  ADD_TO_LIKES_REQUEST,
+  ADD_TO_LIKES_FAILURE,
+  DELETE_FROM_LIKES_SUCCESS,
 } from "../action-types";
 
 const initialState = {
@@ -18,7 +22,7 @@ const initialState = {
   isLoading: false,
   registerErrors: [],
   errors: [],
-  user: { email: "", password: "" },
+  user: { email: "", password: "", likes: [] },
 };
 
 export default function auth(state = initialState, action) {
@@ -36,7 +40,7 @@ export default function auth(state = initialState, action) {
         ...state,
         isAuthenticated: true,
         isLoading: false,
-        user: action.payload,
+        user: { ...state.user, ...action.payload },
       };
     case GET_USER_FAILURE:
       localStorage.removeItem("token");
@@ -84,7 +88,7 @@ export default function auth(state = initialState, action) {
         isLoading: false,
         errors: null,
         registerErrors: null,
-        user: action.payload.user,
+        user: { ...state.user, ...action.payload.user },
       };
     case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
@@ -94,7 +98,25 @@ export default function auth(state = initialState, action) {
         isAuthenticated: true,
         isLoading: false,
         errors: null,
-        user: action.payload.user,
+        user: { ...state.user, ...action.payload.user },
+      };
+    case ADD_TO_LIKES_SUCCESS:
+      console.log(action.payload);
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          likes: [...state.user.likes, action.payload.id],
+        },
+      };
+    case DELETE_FROM_LIKES_SUCCESS:
+      console.log(action.payload);
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          likes: state.user.likes.map((el) => el !== action.payload.id),
+        },
       };
     case LOGOUT_SUCCESS:
       localStorage.removeItem("token");
@@ -111,6 +133,7 @@ export default function auth(state = initialState, action) {
         ...state,
         user: { ...state.user, ...action.payload },
       };
+
     default:
       return state;
   }

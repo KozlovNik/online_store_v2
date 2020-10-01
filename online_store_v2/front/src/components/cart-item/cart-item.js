@@ -2,6 +2,7 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { deleteCartItem, updateCartItem } from "../../redux/actions";
+import { Link } from "react-router-dom";
 
 import "./cart-item.css";
 
@@ -12,8 +13,10 @@ const CartItem = (props) => {
     item_total,
     deleteCartItem,
     updateCartItem,
-    product: { name, image },
+    product: { name, image, category, slug },
   } = props;
+
+  const link = `/products/${category.slug}/${slug}`;
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -21,17 +24,21 @@ const CartItem = (props) => {
   };
 
   const handleChange = (e) => {
-    const quantity = e.target.value
-    updateCartItem(id, quantity)
-  }
+    const quantity = e.target.value;
+    updateCartItem(id, quantity);
+  };
 
   return (
     <section className="cart-item">
       <div className="cart-item__block">
-        <img className="cart-item__image" src={image} alt="" />
+        <Link to={link}>
+          <img className="cart-item__image" src={image} alt="" />
+        </Link>
       </div>
       <div className="cart-item__block cart-item__block--title">
-        <a className="cart-item__name">{name}</a>
+        <Link to={link} className="cart-item__name">
+          {name}
+        </Link>
         <div className="cart-action">
           <a className="cart-action__link" onClick={handleClick}>
             Удалить

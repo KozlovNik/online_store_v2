@@ -41,7 +41,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория', related_name='products')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Бренд', blank=True, null=True)
     available = models.BooleanField(default=True, verbose_name='Наличие товара')
-    users = models.ManyToManyField(User, blank=True, related_name='products')
+    users = models.ManyToManyField(User, blank=True, related_name='likes')
 
     class Meta:
         verbose_name = 'Товар'

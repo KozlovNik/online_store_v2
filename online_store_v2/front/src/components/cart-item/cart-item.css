@@ -13,6 +13,8 @@
 .cart-item__name {
   font: 16px "Century Gothic", sans-serif;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
 }
 
 .cart-item__name:hover {
