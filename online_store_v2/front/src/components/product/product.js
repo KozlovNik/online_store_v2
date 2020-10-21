@@ -4,14 +4,24 @@ import axios from "axios";
 import classNames from "classnames";
 import { connect } from "react-redux";
 
-import { addToLikes, deleteFromLikes } from "../../redux/actions";
+import {
+  addToLikes,
+  deleteFromLikes,
+  setModalWindow,
+} from "../../redux/actions";
 
 import AddToCart from "../add-to-cart";
 import Breadcrumbs from "../breadcrumbs";
 
 import "./product.css";
 
-const Product = ({ likes, addToLikes, deleteFromLikes }) => {
+const Product = ({
+  likes,
+  addToLikes,
+  deleteFromLikes,
+  isAuthenticated,
+  setModalWindow,
+}) => {
   const { category, product } = useParams();
   const [productInfo, setProductInfo] = useState();
 
@@ -35,8 +45,11 @@ const Product = ({ likes, addToLikes, deleteFromLikes }) => {
     category: categoryInfo,
   } = productInfo;
 
-  const handleClick = () => {
-    addToLikes(id);
+  const handleAddTolikesClick = () => {
+    if (isAuthenticated) {
+      return addToLikes(id);
+    }
+    return setModalWindow(true);
   };
 
   return (
@@ -58,7 +71,7 @@ const Product = ({ likes, addToLikes, deleteFromLikes }) => {
                   Удалить из избранного
                 </a>
               ) : (
-                <a onClick={() => addToLikes(id)} className="add-to-favorites">
+                <a onClick={handleAddTolikesClick} className="add-to-favorites">
                   Добавить в избранное
                 </a>
               )}
@@ -112,9 +125,12 @@ const Product = ({ likes, addToLikes, deleteFromLikes }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { likes: state.auth.user.likes };
+  const { isAuthenticated, user } = state.auth;
+  return { isAuthenticated, likes: user.likes };
 };
 
-export default connect(mapStateToProps, { addToLikes, deleteFromLikes })(
-  Product
-);
+export default connect(mapStateToProps, {
+  setModalWindow,
+  addToLikes,
+  deleteFromLikes,
+})(Product);

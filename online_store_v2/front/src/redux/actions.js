@@ -62,7 +62,7 @@ export const getUser = () => (dispatch) => {
 };
 
 export const setLoginData = (data) => (dispatch) => {
-  return dispatch({ type: SET_LOGIN_DATA, payload: data });
+  return dispatch({ type: SET_LOGIN_DATA, payload: { data } });
 };
 
 export const login = () => (dispatch, getState) => {
@@ -101,7 +101,6 @@ export const addToLikes = (id) => (dispatch) => {
       },
     })
     .then((res) => {
-      console.log(res.data);
       dispatch({ type: ADD_TO_LIKES_SUCCESS, payload: { id: res.data.id } });
     });
 };

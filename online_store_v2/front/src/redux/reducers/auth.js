@@ -49,7 +49,7 @@ export default function auth(state = initialState, action) {
         token: null,
         isAuthenticated: false,
         isLoading: false,
-        user: { email: "", password: "" },
+        user: { ...state.user, email: "", password: "" },
       };
     case REGISTER_FAILURE:
       return {
@@ -58,7 +58,7 @@ export default function auth(state = initialState, action) {
         isAuthenticated: false,
         isLoading: false,
         registerErrors: action.payload,
-        user: { email: "", password: "" },
+        user: { ...state.user, email: "", password: "" },
       };
     case LOGIN_FAILURE:
       localStorage.removeItem("token");
@@ -77,7 +77,7 @@ export default function auth(state = initialState, action) {
         isAuthenticated: false,
         isLoading: false,
         errors: action.payload,
-        user: { email: "", password: "" },
+        user: { ...state.user, email: "", password: "" },
       };
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.payload.token);
@@ -101,7 +101,6 @@ export default function auth(state = initialState, action) {
         user: { ...state.user, ...action.payload.user },
       };
     case ADD_TO_LIKES_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         user: {
@@ -110,7 +109,6 @@ export default function auth(state = initialState, action) {
         },
       };
     case DELETE_FROM_LIKES_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         user: {
@@ -126,12 +124,12 @@ export default function auth(state = initialState, action) {
         isAuthenticated: false,
         isLoading: false,
         errors: [],
-        user: { email: "", password: "" },
+        user: { ...state.user, email: "", password: "", likes: [] },
       };
     case SET_LOGIN_DATA:
       return {
         ...state,
-        user: { ...state.user, ...action.payload },
+        user: { ...state.user, ...action.payload.data },
       };
 
     default:
