@@ -4,7 +4,7 @@ import LoginForm from "../login-form";
 import LoginCLoseButton from "../login-close-button";
 
 import { connect } from "react-redux";
-import { setModalWindow } from "../../redux/actions";
+import { setModalWindow } from "../../store/auth/actions";
 
 import classNames from "classnames";
 
@@ -42,11 +42,12 @@ const ModalLoginWindow = ({ loginPopup, setModalWindow, errors }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  loginPopup: state.modals.loginPopup,
-  errors: state.auth.errors,
-});
+const mapStateToProps = (state) => {
+  const { loginPopup, errors } = state.auth;
+  return {
+    loginPopup,
+    errors,
+  };
+};
 
-export default connect(mapStateToProps, { setModalWindow })(
-  ModalLoginWindow
-);
+export default connect(mapStateToProps, { setModalWindow })(ModalLoginWindow);

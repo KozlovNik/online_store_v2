@@ -2,7 +2,7 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { addCartItem } from "../../redux/actions";
+import { addCartItem } from "../../store/products/actions";
 
 import "./add-to-cart.css";
 

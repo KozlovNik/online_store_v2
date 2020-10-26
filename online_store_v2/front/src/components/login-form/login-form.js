@@ -1,7 +1,7 @@
 import React from "react";
 
 import { connect } from "react-redux";
-import { login, setLoginData } from "../../redux/actions";
+import { login, setLoginData } from "../../store/auth/actions";
 
 import "./login-form.css";
 

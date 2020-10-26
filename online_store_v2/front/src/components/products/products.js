@@ -6,7 +6,7 @@ import AddToCart from "../add-to-cart";
 
 import { useParams, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getProducts } from "../../redux/actions";
+import { getProducts } from "../../store/products/actions";
 
 const Products = ({ productsByCategory, getProducts }) => {
   let { category } = useParams();

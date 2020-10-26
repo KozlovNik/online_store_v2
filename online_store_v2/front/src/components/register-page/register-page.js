@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { connect } from 'react-redux';
-import { register } from '../../redux/actions';
+import { register } from '../../store/auth/actions';
 
 import './register-page.css';
 import { useHistory } from 'react-router-dom';

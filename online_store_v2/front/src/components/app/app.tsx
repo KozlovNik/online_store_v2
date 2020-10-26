@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { getUser, getCartItems } from "../../redux/actions";
+import { getUser } from "../../store/auth/actions";
+import { getCartItems } from "../../store/products/actions";
 
 import Header from "../header";
 import ModalLoginWindow from "../modal-login-window";

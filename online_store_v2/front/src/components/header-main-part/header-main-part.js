@@ -5,7 +5,7 @@ import classNames from "classnames";
 import "./header-main-part.css";
 
 import { connect } from "react-redux";
-import { getCartTotal } from "../../redux/reducers/selectors";
+import { getCartTotal } from "../../store/selectors";
 import { Link } from "react-router-dom";
 import LabelBlock from "../label-block";
 import ProfileBlock from "../profile-block";

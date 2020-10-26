@@ -4,11 +4,9 @@ import axios from "axios";
 import classNames from "classnames";
 import { connect } from "react-redux";
 
-import {
-  addToLikes,
-  deleteFromLikes,
-  setModalWindow,
-} from "../../redux/actions";
+import { addToLikes, deleteFromLikes } from "../../store/auth/actions";
+
+import { setModalWindow } from "../../store/auth/actions";
 
 import AddToCart from "../add-to-cart";
 import Breadcrumbs from "../breadcrumbs";

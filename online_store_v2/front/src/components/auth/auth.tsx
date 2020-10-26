@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import classNames from "classnames";
 
-import { setModalWindow, logout } from "../../redux/actions";
+import { logout } from "../../store/auth/actions";
+import { setModalWindow } from "../../store/auth/actions";
 
 import LabelBlock from "../label-block";
 import GenericButton from "../generic-button";
