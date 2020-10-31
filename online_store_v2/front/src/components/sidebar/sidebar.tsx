@@ -5,7 +5,11 @@ import classNames from "classnames";
 
 import "./sidebar.css";
 
-const Sidebar = ({ url }) => {
+interface Props {
+  url: string;
+}
+
+const Sidebar = ({ url }: Props) => {
   const [isHidden, setIsHidden] = useState(true);
 
   return (

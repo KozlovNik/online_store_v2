@@ -1,6 +1,5 @@
 import axios from "axios";
 import {
-  Products,
   GET_PRODUCTS_REQUEST,
   GET_PRODUCTS_FAILURE,
   GET_PRODUCTS_SUCCESS,
@@ -21,14 +20,15 @@ import {
   AddCartItem,
   DeleteCartItem,
   UpdateCartItem,
+  CartItem,
 } from "./types";
 
 import { link } from "../../constants";
 
 import { AppThunk } from "../../types";
-import { Category } from "./types";
+// import { Category } from "./types";
 
-export const getProducts = (category: Category): AppThunk<GetProducts> => (
+export const getProducts = (category: string): AppThunk<GetProducts> => (
   dispatch
 ) => {
   dispatch({ type: GET_PRODUCTS_REQUEST });
@@ -37,6 +37,7 @@ export const getProducts = (category: Category): AppThunk<GetProducts> => (
       params: { category },
     })
     .then((res) => {
+      console.log(res.data.results);
       dispatch({ type: GET_PRODUCTS_SUCCESS, payload: res.data.results });
     });
 };
@@ -54,8 +55,9 @@ export const getCartItems = (): AppThunk<GetCartItems> => (dispatch) => {
       const {
         id: cartId,
         items: cartItems,
-      }: { id: number; items: Product[] } = res.data;
+      }: { id: number; items: CartItem[] } = res.data;
       localStorage.setItem("cartId", cartId.toString());
+      console.log(res.data);
       dispatch({
         type: GET_CART_SUCCESS,
         payload: { cartId, cartItems },

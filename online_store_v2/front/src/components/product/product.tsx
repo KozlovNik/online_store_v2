@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import classNames from "classnames";
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 
 import { addToLikes, deleteFromLikes } from "../../store/auth/actions";
 
@@ -10,8 +10,10 @@ import { setModalWindow } from "../../store/auth/actions";
 
 import AddToCart from "../add-to-cart";
 import Breadcrumbs from "../breadcrumbs";
+import { Product as ProductType } from "../../store/products/types";
 
 import "./product.css";
+import { RootState } from "../../store";
 
 const Product = ({
   likes,
@@ -19,9 +21,9 @@ const Product = ({
   deleteFromLikes,
   isAuthenticated,
   setModalWindow,
-}) => {
-  const { category, product } = useParams();
-  const [productInfo, setProductInfo] = useState();
+}: PropsFromRedux) => {
+  const { category, product } = useParams<RouteParams>();
+  const [productInfo, setProductInfo] = useState<ProductType>();
 
   const [activeTab, setActiveTab] = useState(0);
 
@@ -122,13 +124,22 @@ const Product = ({
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootState) => {
   const { isAuthenticated, user } = state.auth;
   return { isAuthenticated, likes: user.likes };
 };
 
-export default connect(mapStateToProps, {
+interface RouteParams {
+  category: string;
+  product: string;
+}
+
+const connector = connect(mapStateToProps, {
   setModalWindow,
   addToLikes,
   deleteFromLikes,
-})(Product);
+});
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Product);

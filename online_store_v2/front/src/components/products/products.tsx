@@ -5,11 +5,12 @@ import "./products.css";
 import AddToCart from "../add-to-cart";
 
 import { useParams, Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { getProducts } from "../../store/products/actions";
+import { RootState } from "../../store";
 
-const Products = ({ productsByCategory, getProducts }) => {
-  let { category } = useParams();
+const Products = ({ productsByCategory, getProducts }: PropsFromRedux) => {
+  let { category } = useParams<RouteParams>();
 
   useEffect(() => {
     getProducts(category);
@@ -48,10 +49,18 @@ const Products = ({ productsByCategory, getProducts }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootState) => {
   return {
     productsByCategory: state.products.productsByCategory,
   };
 };
 
-export default connect(mapStateToProps, { getProducts })(Products);
+const connector = connect(mapStateToProps, { getProducts });
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+interface RouteParams {
+  category: string;
+}
+
+export default connector(Products);

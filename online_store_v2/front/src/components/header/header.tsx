@@ -4,7 +4,7 @@ import HeaderPopupWindow from '../header-popup-window';
 import HeaderMainPart from '../header-main-part';
 
 
-const Header = () => {
+const Header: React.FC = () => {
     return (
         <header>
             <HeaderPopupWindow />

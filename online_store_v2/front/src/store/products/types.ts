@@ -34,9 +34,16 @@ export interface Product {
   category: Category;
 }
 
+export interface CartItem {
+  id: number;
+  item_total: string;
+  quantity: number
+  product: Product
+}
+
 export interface Cart {
   cartId: number | null;
-  cartItems: Product[];
+  cartItems: CartItem[];
 }
 
 export interface Products extends Cart {
@@ -71,10 +78,7 @@ interface GetCartItemsRequest {
 
 interface GetCartItemsSuccess {
   type: typeof GET_CART_SUCCESS;
-  payload: {
-    cartId: number;
-    cartItems: Product[];
-  };
+  payload: Cart;
 }
 
 interface GetCartItemsFailure {
@@ -93,7 +97,7 @@ interface AddCartItemRequest {
 interface AddCartItemSuccess {
   type: typeof ADD_TO_CART_SUCCESS;
   payload: {
-    cartItem: Product;
+    cartItem: CartItem;
   };
 }
 
@@ -135,7 +139,7 @@ interface UpdateCartItemRequest {
 interface UpdateCartItemSuccess {
   type: typeof UPDATE_CART_ITEM_SUCCESS;
   payload: {
-    cartItem: Product;
+    cartItem: CartItem;
   };
 }
 

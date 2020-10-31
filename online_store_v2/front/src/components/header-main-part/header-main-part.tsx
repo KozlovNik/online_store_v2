@@ -4,11 +4,12 @@ import classNames from "classnames";
 
 import "./header-main-part.css";
 
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { getCartTotal } from "../../store/selectors";
 import { Link } from "react-router-dom";
 import LabelBlock from "../label-block";
 import ProfileBlock from "../profile-block";
+import { RootState } from "../../store";
 
 const navbar = [
   { title: "О нас", link: "/about" },
@@ -20,18 +21,25 @@ const navbar = [
   { title: "Контакты", link: "/contacts" },
 ];
 
-const HeaderMainPart = ({ quantity, totalSum }) => {
+const mapStateToProps = (state: RootState) => {
+  return { ...getCartTotal(state) };
+};
+
+const connector = connect(mapStateToProps);
+type Props = ConnectedProps<typeof connector>;
+
+const HeaderMainPart = ({ quantity, totalSum }: Props) => {
   const [hideNav, setHideNav] = useState(true);
 
   const handleClick = () => {
-    setHideNav(() => true);
+    setHideNav(true);
   };
 
   const navbarEls = navbar.map((el) => {
     const { title, link } = el;
     return (
       <li key={title} className="navbar__item">
-        <Link to={link} className="navbar__link" onClick={setHideNav}>
+        <Link to={link} className="navbar__link" onClick={handleClick}>
           {title}
         </Link>
       </li>
@@ -97,7 +105,7 @@ const HeaderMainPart = ({ quantity, totalSum }) => {
       <nav className="header-lower-part">
         <div
           className="sandwich-button"
-          onClick={() => setHideNav(() => false)}
+          onClick={() => setHideNav(false)}
         >
           <div className="sandwich-button__wrapper">
             <div className="sandwich-button__hor-bar"></div>
@@ -114,8 +122,4 @@ const HeaderMainPart = ({ quantity, totalSum }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { ...getCartTotal(state) };
-};
-
-export default connect(mapStateToProps)(HeaderMainPart);
+export default connector(HeaderMainPart);

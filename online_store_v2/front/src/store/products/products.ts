@@ -29,7 +29,7 @@ const initialState: Products = {
 export default function products(
   state = initialState,
   action: ProductsActionTypes
-) {
+): Products {
   switch (action.type) {
     case GET_PRODUCTS_REQUEST:
       return {

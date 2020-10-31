@@ -3,17 +3,22 @@ import React, { useRef } from "react";
 import LoginForm from "../login-form";
 import LoginCLoseButton from "../login-close-button";
 
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { setModalWindow } from "../../store/auth/actions";
 
 import classNames from "classnames";
 
 import "./modal-login-window.css";
+import { RootState } from "../../store";
 
-const ModalLoginWindow = ({ loginPopup, setModalWindow, errors }) => {
-  const layoutRef = useRef();
+const ModalLoginWindow = ({
+  loginPopup,
+  setModalWindow,
+  errors,
+}: PropsFromRedux) => {
+  const layoutRef = useRef<HTMLDivElement>(null);
 
-  const handleLayoutClick = (e) => {
+  const handleLayoutClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === layoutRef.current) {
       setModalWindow(false);
     }
@@ -42,7 +47,7 @@ const ModalLoginWindow = ({ loginPopup, setModalWindow, errors }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootState) => {
   const { loginPopup, errors } = state.auth;
   return {
     loginPopup,
@@ -50,4 +55,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setModalWindow })(ModalLoginWindow);
+const connector = connect(mapStateToProps, { setModalWindow });
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(ModalLoginWindow);

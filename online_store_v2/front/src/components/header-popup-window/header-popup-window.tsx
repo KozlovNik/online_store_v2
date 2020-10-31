@@ -3,7 +3,7 @@ import classNames from "classnames";
 
 import "./header-popup-window.css";
 
-const HeaderPopupWindow = () => {
+const HeaderPopupWindow: React.FC = () => {
   const [hidePopup, setHidePoput] = useState(false);
 
   return (

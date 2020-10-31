@@ -1,20 +1,19 @@
 import React from "react";
 
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
+import { RootState } from "../../store";
 import { login, setLoginData } from "../../store/auth/actions";
 
 import "./login-form.css";
 
-const LoginForm = ({ login, email, password, setLoginData }) => {
-
-  const handleLoginInputChange = (e) => {
-      
+const LoginForm = ({ login, email, password, setLoginData }: PropsFromRedux) => {
+  const handleLoginInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginData({
       [e.target.name]: e.target.value,
     });
   };
 
-  const handLoginFormSubmit = (e) => {
+  const handLoginFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     login();
   };
@@ -47,7 +46,7 @@ const LoginForm = ({ login, email, password, setLoginData }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootState) => {
   const { email, password } = state.auth.user;
   return {
     email,
@@ -55,4 +54,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { login, setLoginData })(LoginForm);
+const connector = connect(mapStateToProps, { login, setLoginData });
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(LoginForm);
