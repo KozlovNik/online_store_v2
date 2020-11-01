@@ -13,6 +13,7 @@ export interface CartPage {
     quantity: number;
     item_total: number;
     product: {
+      id: number;
       name: string;
       image: string;
       category: { slug: string };
@@ -50,9 +51,7 @@ const CartPage: React.FC<CartPage> = ({ cartItems }) => {
   return content;
 };
 
-const mapStateToProps = (
-  state:any
-) => {
+const mapStateToProps = (state: any) => {
   const cartItems = state.products.cartItems;
   return {
     cartItems,

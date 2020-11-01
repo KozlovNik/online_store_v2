@@ -2,15 +2,10 @@ import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 
 import { setModalWindow } from "../../store/auth/actions";
-import { SET_LOGIN_MODAL_WINDOW } from "../../store/auth/types";
 
 import "./login-close-button.css";
 
-const mapDispatch = {
-  setModalWindow: (data:boolean) => SET_LOGIN_MODAL_WINDOW,
-};
-
-const connector = connect(null, mapDispatch);
+const connector = connect(null, { setModalWindow });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

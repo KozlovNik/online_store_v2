@@ -1,18 +1,23 @@
 import React from "react";
 
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { deleteCartItem, updateCartItem } from "../../store/products/actions";
 import { Link } from "react-router-dom";
 
 import "./cart-item.css";
+import { RootState } from "../../store";
+import {
+  addToLikes,
+  deleteFromLikes,
+  setModalWindow,
+} from "../../store/auth/actions";
 
 interface CartItemInterface {
   id: number;
   quantity: number;
   item_total: number;
-  deleteCartItem: (id: number) => void;
-  updateCartItem: (id: number, quantity: number) => void;
   product: {
+    id: number;
     name: string;
     image: string;
     category: { slug: string };
@@ -20,14 +25,19 @@ interface CartItemInterface {
   };
 }
 
-const CartItem: React.FC<CartItemInterface> = (props) => {
+const CartItem: React.FC<Props> = (props) => {
   const {
     id,
     quantity,
     item_total,
     deleteCartItem,
     updateCartItem,
-    product: { name, image, category, slug },
+    setModalWindow,
+    isAuthenticated,
+    addToLikes,
+    deleteFromLikes,
+    product: { id: productId, name, image, category, slug },
+    likes,
   } = props;
 
   const link = `/products/${category.slug}/${slug}`;
@@ -35,6 +45,13 @@ const CartItem: React.FC<CartItemInterface> = (props) => {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     deleteCartItem(id);
+  };
+
+  const handleAddTolikesClick = () => {
+    if (isAuthenticated) {
+      return addToLikes(productId);
+    }
+    return setModalWindow(true);
   };
 
   const handleChange = (e: React.ChangeEvent) => {
@@ -58,7 +75,18 @@ const CartItem: React.FC<CartItemInterface> = (props) => {
             Удалить
           </a>
           <span> | </span>
-          <a className="cart-action__link">Добавить в закладки</a>
+          {likes.indexOf(productId) > -1 ? (
+            <a
+              className="cart-action__link"
+              onClick={() => deleteFromLikes(productId)}
+            >
+              Удалить из закладок
+            </a>
+          ) : (
+            <a className="cart-action__link" onClick={handleAddTolikesClick}>
+              Добавить в закладки
+            </a>
+          )}
         </div>
       </div>
       <div className="cart-item__block">
@@ -79,4 +107,24 @@ const CartItem: React.FC<CartItemInterface> = (props) => {
   );
 };
 
-export default connect(null, { deleteCartItem, updateCartItem })(CartItem);
+const mapStateToProps = (state: RootState) => {
+  const { user, isAuthenticated } = state.auth;
+  return {
+    isAuthenticated,
+    likes: user.likes,
+  };
+};
+
+const connector = connect(mapStateToProps, {
+  deleteCartItem,
+  updateCartItem,
+  addToLikes,
+  setModalWindow,
+  deleteFromLikes,
+});
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux & CartItemInterface;
+
+export default connector(CartItem);
