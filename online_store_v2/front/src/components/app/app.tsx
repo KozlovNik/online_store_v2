@@ -11,7 +11,6 @@ import RegisterPage from "../register-page";
 import SliderPage from "../slider-page";
 import ProductPage from "../product-page";
 import CartPage from "../cart-page";
-import Spinner from "../spinner";
 
 import "./app.css";
 
@@ -31,7 +30,6 @@ const App: React.FC<AppInterface> = ({ getUser, getCartItems }) => {
       <ModalLoginWindow />
       <Header />
       <div className="app">
-        <Spinner />
         <Switch>
           <Route exact path="/" component={SliderPage} />
           <Route path="/register" component={RegisterPage} />

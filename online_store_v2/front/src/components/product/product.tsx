@@ -88,7 +88,7 @@ const Product = ({
                 <p>Самовывоз — бесплатно</p>
                 <p>Курьерская доставка — от 249 руб.</p>
               </div>
-              <AddToCart slug={slug} />
+              <AddToCart slug={slug} available={available} />
             </div>
           </div>
         </div>

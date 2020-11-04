@@ -42,6 +42,12 @@ export default function products(
         productsByCategory: action.payload,
         isLoading: false,
       };
+    case GET_PRODUCTS_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        errors: action.payload,
+      };
     case GET_CART_SUCCESS:
       return {
         ...state,

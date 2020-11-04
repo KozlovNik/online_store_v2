@@ -37,8 +37,19 @@ export const getProducts = (category: string): AppThunk<GetProducts> => (
       params: { category },
     })
     .then((res) => {
-      console.log(res.data.results);
       dispatch({ type: GET_PRODUCTS_SUCCESS, payload: res.data.results });
+    })
+    .catch((err) => {
+      let errorsObj: string[];
+      if (err.response) {
+        errorsObj = Object.values(err.response.data);
+      } else {
+        errorsObj = ["Проблема с сетью"];
+      }
+      dispatch({
+        type: GET_PRODUCTS_FAILURE,
+        payload: errorsObj,
+      });
     });
 };
 
@@ -112,7 +123,3 @@ export const updateCartItem = (
       });
     });
 };
-
-
-
-

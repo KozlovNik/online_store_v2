@@ -16,3 +16,8 @@
 .add-to-cart:hover {
   background-color: #008b44;
 }
+
+.add-to-cart--not-available {
+  pointer-events: none;
+  background-color: rgb(196, 196, 196);
+}
