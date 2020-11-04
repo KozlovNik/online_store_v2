@@ -1,0 +1,53 @@
+.num-switch {
+  display: flex;
+}
+
+.num-switch__block {
+  width: 30px;
+  height: 30px;
+  border: solid 1px #cccccc;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 28px;
+  cursor: pointer;
+}
+
+.num-switch__block--left {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.num-switch__block--right {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.num-switch__quantity {
+  box-sizing: border-box;
+  width: 38px;
+  height: 30px;
+  text-align: center;
+  border-top: solid 1px #bfbfbf;
+  border-bottom: solid 1px #bfbfbf;
+  border-right: 0;
+  border-left: 0;
+  color: #474243;
+  font-family: p22_underground, sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.num-switch__quantity:focus {
+  outline: none;
+}
+
+.num-switch__quantity::-webkit-outer-spin-button,
+.num-switch__quantity::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.num-switch__quantity {
+  -moz-appearance: textfield; /* Firefox */
+}

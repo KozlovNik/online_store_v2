@@ -106,7 +106,7 @@ export const deleteCartItem = (id: number): AppThunk<DeleteCartItem> => (
 
 export const updateCartItem = (
   id: number,
-  quantity: number
+  quantity: number | ""
 ): AppThunk<UpdateCartItem> => (dispatch) => {
   dispatch({ type: UPDATE_CART_ITEM_REQUEST });
 

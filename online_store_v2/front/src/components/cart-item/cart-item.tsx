@@ -11,6 +11,7 @@ import {
   deleteFromLikes,
   setModalWindow,
 } from "../../store/auth/actions";
+import NumSwitch from "../num-switch";
 
 interface CartItemInterface {
   id: number;
@@ -54,10 +55,7 @@ const CartItem: React.FC<Props> = (props) => {
     return setModalWindow(true);
   };
 
-  const handleChange = (e: React.ChangeEvent) => {
-    const quantity = parseInt((e.target as HTMLInputElement).value);
-    updateCartItem(id, quantity);
-  };
+  
 
   return (
     <section className="cart-item">
@@ -90,15 +88,7 @@ const CartItem: React.FC<Props> = (props) => {
         </div>
       </div>
       <div className="cart-item__block">
-        <input
-          type="number"
-          name="quantity"
-          className="cart-item__quantity"
-          value={quantity}
-          min="1"
-          max="100"
-          onChange={handleChange}
-        />
+        <NumSwitch id={id}/>
       </div>
       <div className="cart-item__block">
         <span>{item_total} </span>руб.
