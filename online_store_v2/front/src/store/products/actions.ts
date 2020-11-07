@@ -28,16 +28,57 @@ import { link } from "../../constants";
 import { AppThunk } from "../../types";
 // import { Category } from "./types";
 
-export const getProducts = (category: string): AppThunk<GetProducts> => (
-  dispatch
-) => {
+export const getProducts = (
+  category: string | undefined
+): AppThunk<GetProducts> => (dispatch, getState) => {
   dispatch({ type: GET_PRODUCTS_REQUEST });
+  let cPage: number;
+  console.log("wrf");
+  if (
+    getState().products.curPage === 1 ||
+    getState().products.curCategory !== category
+  ) {
+    cPage = 1;
+  } else {
+    cPage = getState().products.curPage;
+  }
   axios
     .get(`${link}products/`, {
-      params: { category },
+      params: { category, page: cPage },
     })
     .then((res) => {
-      dispatch({ type: GET_PRODUCTS_SUCCESS, payload: res.data.results });
+      let products, curPage;
+
+      if (cPage === 1) {
+        products = res.data.results;
+      } else {
+        products = [
+          ...getState().products.productsByCategory,
+          ...res.data.results,
+        ];
+      }
+      curPage = cPage + 1;
+      console.log(curPage);
+      let hasMoreItems =
+        res.data.next !== null || getState().products.curCategory !== category;
+      if (getState().products.curCategory !== category) {
+        hasMoreItems = true;
+        curPage = 1;
+      }
+      console.log(getState().products.curCategory, category);
+
+      // console.log(res.data.next !== null);
+      dispatch({
+        type: GET_PRODUCTS_SUCCESS,
+        payload: {
+          products,
+          next: res.data.next,
+          previous: res.data.previous,
+          hasMoreItems,
+          curCategory: category,
+          curPage,
+        },
+      });
     })
     .catch((err) => {
       let errorsObj: string[];
@@ -68,7 +109,7 @@ export const getCartItems = (): AppThunk<GetCartItems> => (dispatch) => {
         items: cartItems,
       }: { id: number; items: CartItem[] } = res.data;
       localStorage.setItem("cartId", cartId.toString());
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({
         type: GET_CART_SUCCESS,
         payload: { cartId, cartItems },

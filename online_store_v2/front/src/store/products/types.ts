@@ -37,8 +37,8 @@ export interface Product {
 export interface CartItem {
   id: number;
   item_total: string;
-  quantity: number
-  product: Product
+  quantity: number;
+  product: Product;
 }
 
 export interface Cart {
@@ -51,6 +51,11 @@ export interface Products extends Cart {
   errors: string[];
   productsByCategory: Product[];
   order: {};
+  next: string | null;
+  previous: string | null;
+  hasMoreItems: boolean;
+  curPage: number;
+  curCategory: string | undefined;
 }
 
 interface GetProductsRequest {
@@ -59,7 +64,14 @@ interface GetProductsRequest {
 
 interface GetProductsSuccess {
   type: typeof GET_PRODUCTS_SUCCESS;
-  payload: Product[];
+  payload: {
+    products: Product[];
+    next: string | null;
+    previous: string | null;
+    hasMoreItems: boolean;
+    curPage: number;
+    curCategory: string | undefined;
+  };
 }
 
 interface GetProductsFailure {

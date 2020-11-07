@@ -24,6 +24,11 @@ const initialState: Products = {
   order: {},
   cartId: null,
   cartItems: [],
+  next: null,
+  hasMoreItems: true,
+  previous: null,
+  curPage: 1,
+  curCategory: "",
 };
 
 export default function products(
@@ -39,13 +44,21 @@ export default function products(
     case GET_PRODUCTS_SUCCESS:
       return {
         ...state,
-        productsByCategory: action.payload,
+        productsByCategory: action.payload.products,
+        next: action.payload.next,
+        previous: action.payload.previous,
+        hasMoreItems: action.payload.hasMoreItems,
         isLoading: false,
+        curCategory: action.payload.curCategory,
+        curPage: action.payload.curPage
       };
     case GET_PRODUCTS_FAILURE:
       return {
         ...state,
         isLoading: false,
+        // next: null,
+        // previous: null,
+        // hasMoreItems: false,
         errors: action.payload,
       };
     case GET_CART_SUCCESS:

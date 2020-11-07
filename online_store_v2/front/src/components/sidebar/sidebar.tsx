@@ -40,6 +40,11 @@ const Sidebar = ({ url }: Props) => {
             Полезный завтрак
           </Link>
         </li>
+        <li className="sidebar__item">
+          <Link className="sidebar__link" to={`${url}/sladosti`}>
+            Сладости
+          </Link>
+        </li>
       </ul>
     </nav>
   );
