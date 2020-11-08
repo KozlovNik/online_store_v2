@@ -134,7 +134,6 @@ export const updateCartItem = (
   quantity: number | ""
 ): AppThunk<UpdateCartItem> => (dispatch) => {
   dispatch({ type: UPDATE_CART_ITEM_REQUEST });
-
   axios
     .put(`${link}cart-items/${id}`, null, {
       params: {
@@ -142,6 +141,7 @@ export const updateCartItem = (
       },
     })
     .then((res) => {
+      console.log('hell')
       dispatch({
         type: UPDATE_CART_ITEM_SUCCESS,
         payload: { cartItem: res.data },

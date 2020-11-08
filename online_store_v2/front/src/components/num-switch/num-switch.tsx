@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../../store";
 import { updateCartItem } from "../../store/products/actions";
 import "./num-switch.css";
+import { useDebounce } from "./custom-hook";
 
 const NumSwitch: React.FC<Props> = ({ id, updateCartItem, quantity }) => {
-  const [stateQuantity, setStateQuantity] = useState<number | "" | undefined>(
+  const { debouncedFunction, stateQuantity, setStateQuantity } = useDebounce(
+    updateCartItem,
     quantity
   );
 
@@ -15,7 +17,7 @@ const NumSwitch: React.FC<Props> = ({ id, updateCartItem, quantity }) => {
       setStateQuantity(inputQuantity);
     }
     if (inputQuantity !== "" && inputQuantity > 0 && inputQuantity <= 100) {
-      updateCartItem(id, inputQuantity);
+      debouncedFunction(id, inputQuantity);
     }
   };
 
@@ -32,7 +34,7 @@ const NumSwitch: React.FC<Props> = ({ id, updateCartItem, quantity }) => {
         newQuantity = stateQuantity - 1;
       }
       setStateQuantity(newQuantity);
-      updateCartItem(id, newQuantity);
+      debouncedFunction(id, newQuantity);
     }
   };
 
