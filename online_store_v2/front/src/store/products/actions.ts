@@ -24,59 +24,44 @@ import {
 } from "./types";
 
 import { link } from "../../constants";
-
 import { AppThunk } from "../../types";
-// import { Category } from "./types";
+
+import { ProductAPI } from "./types";
 
 export const getProducts = (
   category: string | undefined
 ): AppThunk<GetProducts> => (dispatch, getState) => {
   dispatch({ type: GET_PRODUCTS_REQUEST });
-  let cPage: number;
-  console.log("wrf");
-  if (
-    getState().products.curPage === 1 ||
-    getState().products.curCategory !== category
-  ) {
-    cPage = 1;
-  } else {
-    cPage = getState().products.curPage;
+
+  let { curPage, curCategory, productsByCategory } = getState().products;
+
+  if (curCategory !== category) {
+    curPage = 1;
   }
+
   axios
-    .get(`${link}products/`, {
-      params: { category, page: cPage },
+    .get<ProductAPI>(`${link}products/`, {
+      params: { category, page: curPage },
     })
     .then((res) => {
-      let products, curPage;
+      let products: Product[], newCurPage: number;
+      const { results, next } = res.data;
 
-      if (cPage === 1) {
-        products = res.data.results;
+      if (curPage === 1) {
+        products = results;
       } else {
-        products = [
-          ...getState().products.productsByCategory,
-          ...res.data.results,
-        ];
+        products = [...productsByCategory, ...results];
       }
-      curPage = cPage + 1;
-      console.log(curPage);
-      let hasMoreItems =
-        res.data.next !== null || getState().products.curCategory !== category;
-      if (getState().products.curCategory !== category) {
-        hasMoreItems = true;
-        curPage = 1;
-      }
-      console.log(getState().products.curCategory, category);
+      newCurPage = curPage + 1;
 
-      // console.log(res.data.next !== null);
       dispatch({
         type: GET_PRODUCTS_SUCCESS,
         payload: {
           products,
-          next: res.data.next,
-          previous: res.data.previous,
-          hasMoreItems,
+          next,
+          hasMoreItems: next !== null,
           curCategory: category,
-          curPage,
+          curPage: newCurPage,
         },
       });
     })
@@ -109,7 +94,6 @@ export const getCartItems = (): AppThunk<GetCartItems> => (dispatch) => {
         items: cartItems,
       }: { id: number; items: CartItem[] } = res.data;
       localStorage.setItem("cartId", cartId.toString());
-      // console.log(res.data);
       dispatch({
         type: GET_CART_SUCCESS,
         payload: { cartId, cartItems },

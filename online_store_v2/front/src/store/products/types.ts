@@ -52,7 +52,6 @@ export interface Products extends Cart {
   productsByCategory: Product[];
   order: {};
   next: string | null;
-  previous: string | null;
   hasMoreItems: boolean;
   curPage: number;
   curCategory: string | undefined;
@@ -62,12 +61,23 @@ interface GetProductsRequest {
   type: typeof GET_PRODUCTS_REQUEST;
 }
 
+// "count": 13,
+//     "next": "http://127.0.0.1:8000/api/products/?page=2",
+//     "previous": null,
+//     "results": [
+
+export interface ProductAPI {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Product[];
+}
+
 interface GetProductsSuccess {
   type: typeof GET_PRODUCTS_SUCCESS;
   payload: {
     products: Product[];
     next: string | null;
-    previous: string | null;
     hasMoreItems: boolean;
     curPage: number;
     curCategory: string | undefined;

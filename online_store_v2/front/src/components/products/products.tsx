@@ -13,27 +13,13 @@ import InfiniteScroll from "react-infinite-scroller";
 import { useEffect } from "react";
 
 const Products: React.FC<PropsFromRedux> = (props) => {
-  const {
-    productsByCategory,
-    getProducts,
-    errors,
-    next,
-    previous,
-    hasMoreItems,
-    curPage,
-  } = props;
+  const { productsByCategory, getProducts, hasMoreItems } = props;
   let { category } = useParams<RouteParams>();
-  console.log(hasMoreItems);
   useEffect(() => {
     getProducts(category);
   }, [category, getProducts]);
-  // if (errors.length > 0) {
-  //   el = <p>error</p>;
-  // } else if (isLoading) {
-  //   el = <Spinner />;
-  // } else {
+
   const loadItems = () => {
-    // console.log(next !== null);
     getProducts(category);
   };
   let el = (
@@ -69,14 +55,12 @@ const Products: React.FC<PropsFromRedux> = (props) => {
       )}
     </div>
   );
-  // }
-  // console.log("wtf");
   return (
     <InfiniteScroll
       pageStart={0}
       loadMore={loadItems}
       hasMore={hasMoreItems}
-      loader={<Spinner />}
+      loader={<Spinner key={0} />}
     >
       {el}
     </InfiniteScroll>
@@ -84,14 +68,11 @@ const Products: React.FC<PropsFromRedux> = (props) => {
 };
 
 const mapStateToProps = (state: RootState) => {
+  const { productsByCategory, hasMoreItems } = state.products;
+
   return {
-    productsByCategory: state.products.productsByCategory,
-    // isLoading: state.products.isLoading,
-    errors: state.products.errors,
-    next: state.products.next,
-    previous: state.products.previous,
-    hasMoreItems: state.products.hasMoreItems,
-    curPage: state.products.curPage,
+    productsByCategory,
+    hasMoreItems,
   };
 };
 

@@ -25,8 +25,7 @@ const initialState: Products = {
   cartId: null,
   cartItems: [],
   next: null,
-  hasMoreItems: true,
-  previous: null,
+  hasMoreItems: false,
   curPage: 1,
   curCategory: "",
 };
@@ -46,7 +45,6 @@ export default function products(
         ...state,
         productsByCategory: action.payload.products,
         next: action.payload.next,
-        previous: action.payload.previous,
         hasMoreItems: action.payload.hasMoreItems,
         isLoading: false,
         curCategory: action.payload.curCategory,
@@ -56,9 +54,6 @@ export default function products(
       return {
         ...state,
         isLoading: false,
-        // next: null,
-        // previous: null,
-        // hasMoreItems: false,
         errors: action.payload,
       };
     case GET_CART_SUCCESS:
