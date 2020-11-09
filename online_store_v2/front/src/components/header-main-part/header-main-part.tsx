@@ -13,10 +13,7 @@ import { RootState } from "../../store";
 
 const navbar = [
   { title: "О нас", link: "/about" },
-  { title: "Новости", link: "/news" },
-  { title: "Акции", link: "/discounts" },
   { title: "Продукты", link: "/products" },
-  { title: "Статьи", link: "/articles" },
   { title: "Доставка и оплата", link: "/delivery" },
   { title: "Контакты", link: "/contacts" },
 ];

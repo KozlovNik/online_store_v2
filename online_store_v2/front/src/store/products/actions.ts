@@ -141,7 +141,6 @@ export const updateCartItem = (
       },
     })
     .then((res) => {
-      console.log("hell");
       dispatch({
         type: UPDATE_CART_ITEM_SUCCESS,
         payload: { cartItem: res.data },

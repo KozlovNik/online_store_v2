@@ -80,7 +80,6 @@ export default function products(
       };
 
     case UPDATE_CART_ITEM_REQUEST:
-      case UPDATE_CART_ITEM_FAILURE:
       return {
         ...state,
         cartItems: state.cartItems.map((item) => {
@@ -91,16 +90,17 @@ export default function products(
         }),
       };
 
-    // case UPDATE_CART_ITEM_FAILURE:
-      // return {
-      //   ...state,
-      //   cartItems: state.cartItems.map((item) => {
-      //     if (item.id === action.payload.id) {
-      //       return { ...item, isItemLoading: false };
-      //     }
-      //     return item;
-      //   }),
-      // };
+    case UPDATE_CART_ITEM_FAILURE:
+      return {
+        ...state,
+        cartItems: state.cartItems.map((item) => {
+          if (item.id === action.payload.id) {
+            return { ...item, isItemLoading: false };
+          }
+          return item;
+        }),
+      };
+
     case UPDATE_CART_ITEM_SUCCESS:
       return {
         ...state,

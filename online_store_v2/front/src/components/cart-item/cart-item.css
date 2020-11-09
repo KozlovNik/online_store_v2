@@ -11,6 +11,10 @@
   flex-basis: 0;
 }
 
+.cart-item__block--custom {
+  text-align: center;
+}
+
 .cart-item__name {
   font: 16px "Century Gothic", sans-serif;
   cursor: pointer;
