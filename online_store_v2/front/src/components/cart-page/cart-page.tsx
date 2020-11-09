@@ -4,25 +4,9 @@ import "./cart-page.css";
 import CartItem from "../cart-item";
 
 import { connect } from "react-redux";
+import { Cart } from "../../store/products/types";
 
-// import { CartPage } from "../../types";
-
-export interface CartPage {
-  cartItems: {
-    id: number;
-    quantity: number;
-    item_total: number;
-    product: {
-      id: number;
-      name: string;
-      image: string;
-      category: { slug: string };
-      slug: string;
-    };
-  }[];
-}
-
-const CartPage: React.FC<CartPage> = ({ cartItems }) => {
+const CartPage: React.FC<Cart> = ({ cartItems }) => {
   let content =
     cartItems.length > 0 ? (
       <>

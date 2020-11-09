@@ -39,6 +39,7 @@ export interface CartItem {
   item_total: string;
   quantity: number;
   product: Product;
+  isItemLoading: boolean;
 }
 
 export interface Cart {
@@ -156,6 +157,9 @@ export type DeleteCartItem =
 
 interface UpdateCartItemRequest {
   type: typeof UPDATE_CART_ITEM_REQUEST;
+  payload: {
+    id: number;
+  };
 }
 
 interface UpdateCartItemSuccess {
@@ -167,7 +171,9 @@ interface UpdateCartItemSuccess {
 
 interface UpdateCartItemFailure {
   type: typeof UPDATE_CART_ITEM_FAILURE;
-  payload: string[];
+  payload: {
+    id: number;
+  };
 }
 
 export type UpdateCartItem =

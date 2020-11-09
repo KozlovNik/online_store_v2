@@ -2,6 +2,7 @@
   padding: 20px;
   display: flex;
   border-bottom: 1px solid rgb(170, 169, 169);
+  position: relative;
 }
 
 .cart-item__block {
@@ -53,4 +54,24 @@
   .cart-item__block--title {
     order: 1;
   }
+}
+
+.cart-item__loading {
+  width: 100%;
+  position: absolute;
+  background-color: rgba(158, 158, 158, 0.315);
+  top: 0;
+  left: 0;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s linear;
+  display: flex;
+  align-items: center;
+}
+
+.cart-item__loading--show {
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.3s cubic-bezier(0, 1, 0, 1);
 }

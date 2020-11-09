@@ -1,44 +1,34 @@
 import React from "react";
 
 import { connect, ConnectedProps } from "react-redux";
-import { deleteCartItem, updateCartItem } from "../../store/products/actions";
+import { deleteCartItem } from "../../store/products/actions";
 import { Link } from "react-router-dom";
+import { CartItem as CartItemInterface } from "../../store/products/types";
 
 import "./cart-item.css";
 import { RootState } from "../../store";
+
 import {
   addToLikes,
   deleteFromLikes,
   setModalWindow,
 } from "../../store/auth/actions";
 import NumSwitch from "../num-switch";
-
-interface CartItemInterface {
-  id: number;
-  quantity: number;
-  item_total: number;
-  product: {
-    id: number;
-    name: string;
-    image: string;
-    category: { slug: string };
-    slug: string;
-  };
-}
+import classNames from "classnames";
+import Spinner from "../spinner";
 
 const CartItem: React.FC<Props> = (props) => {
   const {
     id,
-    quantity,
     item_total,
     deleteCartItem,
-    updateCartItem,
     setModalWindow,
     isAuthenticated,
     addToLikes,
     deleteFromLikes,
     product: { id: productId, name, image, category, slug },
     likes,
+    isItemLoading,
   } = props;
 
   const link = `/products/${category.slug}/${slug}`;
@@ -55,10 +45,16 @@ const CartItem: React.FC<Props> = (props) => {
     return setModalWindow(true);
   };
 
-  
-
   return (
     <section className="cart-item">
+      <div
+        className={classNames(
+          { "cart-item__loading--show": isItemLoading },
+          "cart-item__loading"
+        )}
+      >
+        <Spinner />
+      </div>
       <div className="cart-item__block">
         <Link to={link}>
           <img className="cart-item__image" src={image} alt="" />
@@ -88,7 +84,7 @@ const CartItem: React.FC<Props> = (props) => {
         </div>
       </div>
       <div className="cart-item__block">
-        <NumSwitch id={id}/>
+        <NumSwitch id={id} />
       </div>
       <div className="cart-item__block">
         <span>{item_total} </span>руб.
@@ -107,7 +103,6 @@ const mapStateToProps = (state: RootState) => {
 
 const connector = connect(mapStateToProps, {
   deleteCartItem,
-  updateCartItem,
   addToLikes,
   setModalWindow,
   deleteFromLikes,

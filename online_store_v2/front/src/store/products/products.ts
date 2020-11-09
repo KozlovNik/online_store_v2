@@ -48,7 +48,7 @@ export default function products(
         hasMoreItems: action.payload.hasMoreItems,
         isLoading: false,
         curCategory: action.payload.curCategory,
-        curPage: action.payload.curPage
+        curPage: action.payload.curPage,
       };
     case GET_PRODUCTS_FAILURE:
       return {
@@ -57,9 +57,14 @@ export default function products(
         errors: action.payload,
       };
     case GET_CART_SUCCESS:
+      let { cartId, cartItems } = action.payload;
+
       return {
         ...state,
-        ...action.payload,
+        cartId,
+        cartItems: cartItems.map((item) => {
+          return { ...item, isItemLoading: false };
+        }),
       };
     case ADD_TO_CART_SUCCESS:
       return {
@@ -73,6 +78,29 @@ export default function products(
           (item) => item.id !== action.payload.id
         ),
       };
+
+    case UPDATE_CART_ITEM_REQUEST:
+      case UPDATE_CART_ITEM_FAILURE:
+      return {
+        ...state,
+        cartItems: state.cartItems.map((item) => {
+          if (item.id === action.payload.id) {
+            return { ...item, isItemLoading: true };
+          }
+          return item;
+        }),
+      };
+
+    // case UPDATE_CART_ITEM_FAILURE:
+      // return {
+      //   ...state,
+      //   cartItems: state.cartItems.map((item) => {
+      //     if (item.id === action.payload.id) {
+      //       return { ...item, isItemLoading: false };
+      //     }
+      //     return item;
+      //   }),
+      // };
     case UPDATE_CART_ITEM_SUCCESS:
       return {
         ...state,

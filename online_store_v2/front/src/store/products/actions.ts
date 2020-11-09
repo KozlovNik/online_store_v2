@@ -133,7 +133,7 @@ export const updateCartItem = (
   id: number,
   quantity: number | ""
 ): AppThunk<UpdateCartItem> => (dispatch) => {
-  dispatch({ type: UPDATE_CART_ITEM_REQUEST });
+  dispatch({ type: UPDATE_CART_ITEM_REQUEST, payload: { id } });
   axios
     .put(`${link}cart-items/${id}`, null, {
       params: {
@@ -141,10 +141,14 @@ export const updateCartItem = (
       },
     })
     .then((res) => {
-      console.log('hell')
+      console.log("hell");
       dispatch({
         type: UPDATE_CART_ITEM_SUCCESS,
         payload: { cartItem: res.data },
       });
+    })
+    .catch(() => {
+      console.log('error')
+      dispatch({ type: UPDATE_CART_ITEM_FAILURE, payload: { id } });
     });
 };

@@ -12,6 +12,10 @@
   cursor: pointer;
 }
 
+.num-switch__block:hover {
+  border-color: #db5657;
+}
+
 .num-switch__block--left {
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
