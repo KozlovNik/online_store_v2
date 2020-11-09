@@ -1,0 +1,20 @@
+.footer {
+  margin-top: auto;
+  height: 100px;
+  min-height: 100px;
+  width: 100%;
+  background-color: #f8f4ef;
+  color: rgb(71, 66, 67);
+  font-family: p22_underground, sans-serif;
+  font-size: 14px;
+}
+
+.footer__container {
+  max-width: 1000px;
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

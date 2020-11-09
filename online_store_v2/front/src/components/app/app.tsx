@@ -13,6 +13,7 @@ import ProductPage from "../product-page";
 import CartPage from "../cart-page";
 
 import "./app.css";
+import Footer from "../footer";
 
 interface AppInterface {
   getUser: Function;
@@ -37,6 +38,7 @@ const App: React.FC<AppInterface> = ({ getUser, getCartItems }) => {
           <Route path="/cart" component={CartPage} />
         </Switch>
       </div>
+      <Footer/>
     </Router>
   );
 };
