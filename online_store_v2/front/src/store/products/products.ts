@@ -15,6 +15,7 @@ import {
   GET_CART_REQUEST,
   GET_CART_FAILURE,
   GET_CART_SUCCESS,
+  ADD_TO_CART_FAILURE,
 } from "./types";
 
 const initialState: Products = {
@@ -66,10 +67,40 @@ export default function products(
           return { ...item, isItemLoading: false };
         }),
       };
+    case ADD_TO_CART_REQUEST:
+      console.log('wtf2')
+      return {
+        ...state,
+        productsByCategory: state.productsByCategory.map((product) => {
+          console.log(product.slug,"----", action.payload.slug)
+          if (product.slug === action.payload.slug) {
+            return { ...product, isProductLoading: true };
+          }
+          return product;
+        }),
+      };
     case ADD_TO_CART_SUCCESS:
       return {
         ...state,
+        productsByCategory: state.productsByCategory.map((product) => {
+          if (product.slug === action.payload.slug) {
+            console.log('found  ')
+            return { ...product, isProductLoading: false };
+          }
+          console.log(product.slug, action.payload.slug)
+          return product;
+        }),
         cartItems: [...state.cartItems, action.payload.cartItem],
+      };
+    case ADD_TO_CART_FAILURE:
+      return {
+        ...state,
+        productsByCategory: state.productsByCategory.map((product) => {
+          if (product.slug === action.payload.slug) {
+            return { ...product, isProductLoading: false };
+          }
+          return product;
+        }),
       };
     case DELETE_FROM_CART_SUCCESS:
       return {
@@ -78,6 +109,30 @@ export default function products(
           (item) => item.id !== action.payload.id
         ),
       };
+
+    case DELETE_FROM_CART_FAILURE: {
+      return {
+        ...state,
+        cartItems: state.cartItems.map((item) => {
+          if (item.id === action.payload.id) {
+            return { ...item, isItemLoading: false };
+          }
+          return item;
+        }),
+      };
+    }
+
+    case DELETE_FROM_CART_REQUEST: {
+      return {
+        ...state,
+        cartItems: state.cartItems.map((item) => {
+          if (item.id === action.payload.id) {
+            return { ...item, isItemLoading: true };
+          }
+          return item;
+        }),
+      };
+    }
 
     case UPDATE_CART_ITEM_REQUEST:
       return {

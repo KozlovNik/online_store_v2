@@ -47,15 +47,14 @@ const CartItem: React.FC<Props> = (props) => {
 
   return (
     <section className="cart-item">
-        
-        <div
-          className={classNames(
-            { "cart-item__loading--show": isItemLoading },
-            "cart-item__loading"
-          )}
-        >
-<Spinner />
-        </div>
+      <div
+        className={classNames(
+          { "cart-item__loading--show": isItemLoading },
+          "cart-item__loading"
+        )}
+      >
+        <Spinner />
+      </div>
       <div className="cart-item__block">
         <Link to={link}>
           <img className="cart-item__image" src={image} alt="" />

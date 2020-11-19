@@ -4,10 +4,17 @@ import { connect, ConnectedProps } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../../store";
 import { addCartItem } from "../../store/products/actions";
+import Spinner from "../spinner";
 
 import "./add-to-cart.css";
 
-const AddToCart = ({ slug, cartItems, addCartItem, available }: Props) => {
+const AddToCart = ({
+  slug,
+  cartItems,
+  addCartItem,
+  available,
+  isProductLoading,
+}: Props) => {
   let btn;
   if (available) {
     if (cartItems.indexOf(slug) > -1) {
@@ -16,6 +23,8 @@ const AddToCart = ({ slug, cartItems, addCartItem, available }: Props) => {
           Перейти в корзину
         </Link>
       );
+    } else if (isProductLoading) {
+      btn = <Spinner />;
     } else {
       btn = (
         <a className="add-to-cart" onClick={() => addCartItem(slug)}>
@@ -49,6 +58,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & {
   slug: string;
   available: boolean;
+  isProductLoading: boolean;
 };
 
 export default connector(AddToCart);

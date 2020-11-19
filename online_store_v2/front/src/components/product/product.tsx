@@ -42,8 +42,10 @@ const Product = ({
     available,
     price,
     slug,
+    isProductLoading,
     category: categoryInfo,
   } = productInfo;
+  console.log(isProductLoading, slug)
 
   const handleAddTolikesClick = () => {
     if (isAuthenticated) {
@@ -88,7 +90,11 @@ const Product = ({
                 <p>Самовывоз — бесплатно</p>
                 <p>Курьерская доставка — от 249 руб.</p>
               </div>
-              <AddToCart slug={slug} available={available} />
+              <AddToCart
+                slug={slug}
+                available={available}
+                isProductLoading={isProductLoading}
+              />
             </div>
           </div>
         </div>

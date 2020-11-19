@@ -25,7 +25,8 @@ const Products: React.FC<PropsFromRedux> = (props) => {
   let el = (
     <div className="catalog-wrapper">
       {productsByCategory.map(
-        ({ image, name, price, slug, category, available }) => {
+        ({ image, name, price, slug, category, available, isProductLoading }) => {
+          console.log(isProductLoading)
           return (
             <div className="product" key={slug}>
               <div className="product__image-wrapper">
@@ -48,7 +49,7 @@ const Products: React.FC<PropsFromRedux> = (props) => {
               <div className="product__price">
                 <b>{price} рублей</b>
               </div>
-              <AddToCart slug={slug} available={available} />
+              <AddToCart slug={slug} available={available} isProductLoading={isProductLoading} />
             </div>
           );
         }

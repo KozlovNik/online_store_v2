@@ -12,9 +12,6 @@
   top: -38px;
 }
 
-.header-popup-window__empty-block {
-  height: 5px;
-}
 
 .header-popup-window__wrapper {
   width: 1000px;
@@ -25,11 +22,11 @@
 }
 
 .header-popup-window__text {
-  margin-top: 6px;
+  margin-top: 5px;
   display: inline-block;
   text-align: center;
-  font: 18px "Century Gothic";
-  font-weight: 900;
+  font: 20px "Dosis", sans-serif;
+  font-weight: 500;
   color: #fffcd9;
 }
 

@@ -1,20 +1,78 @@
 .footer {
   margin-top: auto;
-  height: 150px;
-  min-height: 150px;
   width: 100%;
-  background-color: #f8f4ef;
+  background-color: #faf8fb;
   color: rgb(71, 66, 67);
-  font-family: p22_underground, sans-serif;
-  font-size: 14px;
+  font-family: Roboto, sans-serif;
+}
+
+.footer__phone-number {
+  font-size: 22px;
+  font-weight: 600;
+  color: #7d7262;
+}
+
+.footer__para {
+  text-align: left;
+  font-weight: 300;
 }
 
 .footer__container {
   max-width: 1000px;
+  min-height: 150px;
   height: 100%;
   margin: 0 auto;
   text-align: center;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+}
+
+.footer-navbar {
+  list-style: none;
+  /* display: flex */
+}
+
+.footer-navbar__link {
+  text-decoration: none;
+  color: rgb(71, 66, 67);
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 300;
+}
+
+.footer-navbar__link:hover {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 1000px) {
+  .footer__item {
+    margin: 0 20px;
+  }
+}
+
+@media screen and (max-width: 748px) {
+  .footer__container {
+    display: block;
+    height: 100%;
+    
+  }
+
+  .footer {
+    display: block;
+    padding: 20px;
+    width: calc(100% - 40px);
+  }
+
+  .footer__item {
+    margin: 0;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+
+  .footer__para--info {
+    display: none;
+  }
 }

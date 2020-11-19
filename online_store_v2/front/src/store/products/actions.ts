@@ -21,6 +21,7 @@ import {
   DeleteCartItem,
   UpdateCartItem,
   CartItem,
+  ADD_TO_CART_FAILURE,
 } from "./types";
 
 import { link } from "../../constants";
@@ -104,9 +105,8 @@ export const getCartItems = (): AppThunk<GetCartItems> => (dispatch) => {
 export const addCartItem = (slug: string): AppThunk<AddCartItem> => (
   dispatch
 ) => {
-  dispatch({ type: ADD_TO_CART_REQUEST });
+  dispatch({ type: ADD_TO_CART_REQUEST, payload: { slug } });
   let cartId = localStorage.getItem("cartId");
-
   axios
     .post(`${link}cart-items/`, null, {
       params: {
@@ -115,18 +115,34 @@ export const addCartItem = (slug: string): AppThunk<AddCartItem> => (
       },
     })
     .then((res) => {
-      dispatch({ type: ADD_TO_CART_SUCCESS, payload: { cartItem: res.data } });
+      setTimeout(() => {
+        console.log(slug)
+        dispatch({
+          type: ADD_TO_CART_SUCCESS,
+          payload: { cartItem: res.data, slug },
+        });
+      }, 300);
+    }).catch(()=>{
+      dispatch({
+        type: ADD_TO_CART_FAILURE,
+        payload: { slug },
+      })
     });
 };
 
 export const deleteCartItem = (id: number): AppThunk<DeleteCartItem> => (
   dispatch
 ) => {
-  dispatch({ type: DELETE_FROM_CART_REQUEST });
+  dispatch({ type: DELETE_FROM_CART_REQUEST, payload: { id } });
 
-  axios.delete(`${link}cart-items/${id}`).then(() => {
-    dispatch({ type: DELETE_FROM_CART_SUCCESS, payload: { id } });
-  });
+  axios
+    .delete(`${link}cart-items/${id}`)
+    .then(() => {
+      dispatch({ type: DELETE_FROM_CART_SUCCESS, payload: { id } });
+    })
+    .catch(() => {
+      dispatch({ type: DELETE_FROM_CART_FAILURE, payload: { id } });
+    });
 };
 
 export const updateCartItem = (
@@ -147,7 +163,7 @@ export const updateCartItem = (
       });
     })
     .catch(() => {
-      console.log('error')
+      console.log("error");
       dispatch({ type: UPDATE_CART_ITEM_FAILURE, payload: { id } });
     });
 };

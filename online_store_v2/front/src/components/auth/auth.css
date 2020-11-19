@@ -5,6 +5,10 @@
   flex-wrap: wrap;
 }
 
+.profile-block__img {
+  margin-right: 5px;
+}
+
 @media screen and (max-width: 800px) {
   .auth-list {
     z-index: 3;

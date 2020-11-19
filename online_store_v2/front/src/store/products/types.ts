@@ -32,6 +32,7 @@ export interface Product {
   available: boolean;
   brand: string | null;
   category: Category;
+  isProductLoading: boolean;
 }
 
 export interface CartItem {
@@ -115,18 +116,22 @@ export type GetCartItems =
 
 interface AddCartItemRequest {
   type: typeof ADD_TO_CART_REQUEST;
+  payload: {
+    slug: string;
+  };
 }
 
 interface AddCartItemSuccess {
   type: typeof ADD_TO_CART_SUCCESS;
   payload: {
     cartItem: CartItem;
+    slug: string;
   };
 }
 
 interface AddCartItemFailure {
   type: typeof ADD_TO_CART_FAILURE;
-  payload: string[];
+  payload: { slug: string };
 }
 
 export type AddCartItem =
@@ -136,6 +141,7 @@ export type AddCartItem =
 
 interface DeleteCartItemRequest {
   type: typeof DELETE_FROM_CART_REQUEST;
+  payload: { id: number };
 }
 
 interface DeleteCartItemSuccess {
@@ -146,8 +152,10 @@ interface DeleteCartItemSuccess {
 }
 
 interface DeleteCartItemFailure {
-  type: typeof DELETE_FROM_LIKES_FAILURE;
-  payload: string[];
+  type: typeof DELETE_FROM_CART_FAILURE;
+  payload: {
+    id: number;
+  };
 }
 
 export type DeleteCartItem =

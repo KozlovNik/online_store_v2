@@ -6,7 +6,7 @@ import HeaderMainPart from '../header-main-part';
 
 const Header: React.FC = () => {
     return (
-        <header>
+        <header className="header">
             <HeaderPopupWindow />
             <HeaderMainPart/>
         </header>
