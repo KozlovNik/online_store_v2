@@ -23,10 +23,18 @@ const Products: React.FC<PropsFromRedux> = (props) => {
     getProducts(category);
   };
   let el = (
-    <div className="catalog-wrapper">
+    <>
       {productsByCategory.map(
-        ({ image, name, price, slug, category, available, isProductLoading }) => {
-          console.log(isProductLoading)
+        ({
+          image,
+          name,
+          price,
+          slug,
+          category,
+          available,
+          isProductLoading,
+        }) => {
+          console.log(isProductLoading);
           return (
             <div className="product" key={slug}>
               <div className="product__image-wrapper">
@@ -49,15 +57,20 @@ const Products: React.FC<PropsFromRedux> = (props) => {
               <div className="product__price">
                 <b>{price} рублей</b>
               </div>
-              <AddToCart slug={slug} available={available} isProductLoading={isProductLoading} />
+              <AddToCart
+                slug={slug}
+                available={available}
+                isProductLoading={isProductLoading}
+              />
             </div>
           );
         }
       )}
-    </div>
+    </>
   );
   return (
     <InfiniteScroll
+      className="catalog-wrapper"
       pageStart={0}
       loadMore={loadItems}
       hasMore={hasMoreItems}

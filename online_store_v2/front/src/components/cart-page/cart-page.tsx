@@ -10,7 +10,7 @@ const CartPage: React.FC<Cart> = ({ cartItems }) => {
   let content =
     cartItems.length > 0 ? (
       <>
-        <h2 className="cart__heading">Корзина</h2>
+        <h2 className="cart__heading">КОРЗИНА</h2>
         {cartItems.map((item) => (
           <CartItem key={item.id} {...item} />
         ))}

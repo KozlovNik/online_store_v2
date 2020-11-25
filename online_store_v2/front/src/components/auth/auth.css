@@ -9,6 +9,21 @@
   margin-right: 5px;
 }
 
+.profile-block__link {
+  cursor: pointer;
+  color: #616161;
+  display: block;
+  font-size: 14px;
+  font-weight: 300;
+  text-decoration: underline dotted #616161 1px;
+  padding-top: 5px;
+}
+
+.profile-block__link:hover {
+  color: rgba(255, 67, 54, 0.98);
+  text-decoration: none;
+}
+
 @media screen and (max-width: 800px) {
   .auth-list {
     z-index: 3;
@@ -27,5 +42,10 @@
   .auth-list--hidden {
     max-height: 0px;
     overflow: hidden;
+  }
+
+  .profile-block__link {
+    margin: 5px;
+    margin-left: 10px;
   }
 }

@@ -18,7 +18,7 @@ const Sidebar = ({ url }: Props) => {
         className="sidebar__header"
         onClick={() => setIsHidden((isHidden) => !isHidden)}
       >
-        Категории{" "}
+        КАТЕГОРИИ
         <span
           className={classNames("sidebar__header-arrow", {
             "sidebar__header-arrow--reverse": isHidden,

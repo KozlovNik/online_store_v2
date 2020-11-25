@@ -32,11 +32,11 @@
   content: "";
   width: 20px;
   height: 20px;
-  background: url("./heart.svg") no-repeat;
+  background: url("../svgs/hollow-heart.svg") no-repeat;
 }
 
 .add-to-favorites--active:before {
-  background: url("./heart-fill.svg") no-repeat;
+  background: url("../svgs/heart.svg") no-repeat;
 }
 
 .add-to-favorites:hover {

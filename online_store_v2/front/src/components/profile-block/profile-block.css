@@ -8,18 +8,7 @@
   display: none;
 }
 
-.profile-block__link {
-  color: #616161;
-  display: block;
-  font-size: 14px;
-  text-decoration: underline dotted #616161;
-  padding-top: 5px;
-}
 
-.profile-block__link:hover {
-  color: rgba(255, 67, 54, 0.98);
-  text-decoration: underline dotted rgba(255, 67, 54, 0.98);
-}
 
 @media screen and (max-width: 800px) {
   .profile-block {
@@ -33,10 +22,5 @@
     margin: 0;
     top: 15px;
     right: 15px;
-  }
-
-  .profile-block__link {
-    margin: 5px;
-    margin-left: 10px;
   }
 }

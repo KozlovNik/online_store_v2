@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import LabelBlock from "../label-block";
 import ProfileBlock from "../profile-block";
 import { RootState } from "../../store";
-import logo from "../../logo/logo.svg";
+import logo from "../svgs/logo.svg";
 import Navbar from "../navbar-els";
 
 const mapStateToProps = (state: RootState) => {
@@ -31,7 +31,7 @@ const HeaderMainPart = ({ quantity, totalSum }: Props) => {
     <div className="header-wrapper-outer">
       <section className="header-upper-part">
         <div className="header-upper-part__item header-upper-part__item--logo">
-          <img className="header-logo" src={logo} />
+          <img src={logo} className="header-logo" />
         </div>
         <p className="header-upper-part__item--phone-number">
           +7 (800) 234 56 78

@@ -1,6 +1,7 @@
 .product-page {
   display: flex;
   justify-content: space-between;
+  /* align-items: stretch; */
 }
 
 @media screen and (max-width: 800px) {
