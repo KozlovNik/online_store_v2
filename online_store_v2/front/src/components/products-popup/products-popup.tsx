@@ -28,8 +28,8 @@ function Thumb() {
   );
 }
 
-const ProductsPopup = (props: PropsFromRedux) => {
-  const cartItems = props.products.cartItems;
+const ProductsPopup = ({ recentlyViewed }: PropsFromRedux) => {
+  const viewedItems = recentlyViewed.vieweditems;
   return (
     <Popup
       trigger={
@@ -47,10 +47,11 @@ const ProductsPopup = (props: PropsFromRedux) => {
         className="products-popup"
         hideTracksWhenNotNeeded={true}
       >
-        {cartItems.map((item, index, arr) => {
+        {viewedItems.map((item, index, arr) => {
           const { image, name, price, slug, category } = item.product;
           return (
             <div
+              key={slug}
               className={classNames("products-popup-item", {
                 "products-popup-item--last": index === arr.length - 1,
               })}
@@ -74,8 +75,9 @@ const ProductsPopup = (props: PropsFromRedux) => {
 };
 
 const mapStateToProps = (state: RootState) => {
-  console.log(state);
-  return state;
+  return {
+    recentlyViewed: state.recentlyViewed,
+  };
 };
 
 const connector = connect(mapStateToProps);

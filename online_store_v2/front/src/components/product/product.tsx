@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { connect, ConnectedProps } from "react-redux";
 
 import { addToLikes, deleteFromLikes } from "../../store/auth/actions";
+import { addRecentlyViewedItem } from "../../store/recently-viewed/actions";
 
 import { setModalWindow } from "../../store/auth/actions";
 
@@ -21,6 +22,7 @@ const Product = ({
   deleteFromLikes,
   isAuthenticated,
   setModalWindow,
+  addRecentlyViewedItem,
 }: PropsFromRedux) => {
   const { category, product } = useParams<RouteParams>();
   const [productInfo, setProductInfo] = useState<ProductType>();
@@ -30,8 +32,13 @@ const Product = ({
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/api/products/${product}`).then((res) => {
       setProductInfo(res.data);
+      addRecentlyViewedItem(res.data.id);
     });
   }, [category, product]);
+
+  // useEffect(()=>{
+  //   addRecentlyViewedItem(id)
+  // },[productInfo.id])
 
   if (!productInfo) return null;
 
@@ -45,7 +52,6 @@ const Product = ({
     isProductLoading,
     category: categoryInfo,
   } = productInfo;
-  console.log(isProductLoading, slug)
 
   const handleAddTolikesClick = () => {
     if (isAuthenticated) {
@@ -144,6 +150,7 @@ const connector = connect(mapStateToProps, {
   setModalWindow,
   addToLikes,
   deleteFromLikes,
+  addRecentlyViewedItem,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;

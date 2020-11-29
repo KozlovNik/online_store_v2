@@ -1,6 +1,7 @@
-from rest_framework import serializers 
+from rest_framework import serializers
 
-from .models import Category, Product, Cart, CartItem
+from .models import Category, Product, Cart, CartItem, RecentlyViewed, ViewedItem
+
 
 class CategorySerializer(serializers.ModelSerializer):
 
@@ -8,38 +9,53 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ['name', 'slug']
 
+
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
+
     class Meta:
         model = Product
-        # fields = ['name','slug','image','price']
         fields = '__all__'
+
+
+class ViewedItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ViewedItem
+        depth = 1
+        fields = ['id', 'product']
+
+
+class RecentlyViewedSerializer(serializers.ModelSerializer):
+    vieweditems = ViewedItemSerializer(many=True)
+    class Meta:
+        model = RecentlyViewed
+        fields = ['id', 'vieweditems']
+
 
 class ProductIdSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id']
 
+
 class CartItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
+
     class Meta:
         model = CartItem
-        fields = ['id','product', 'quantity','item_total']
-    
+        fields = ['id', 'product', 'quantity', 'item_total']
+
 
 class CartSerializer(serializers.ModelSerializer):
     items = CartItemSerializer(many=True)
+
     class Meta:
-        model =  Cart
-        fields = ['id','items']
+        model = Cart
+        fields = ['id', 'items']
 
     def create(self, validated_data):
-        instance, _ = models.MyModel.objects.get_or_create(**validated_data)
+        instance, _ = Cart.objects.get_or_create(**validated_data)
         return instance
-
-
-
-
 
     # def get_queryset(self):
     #     """
@@ -51,7 +67,3 @@ class CartSerializer(serializers.ModelSerializer):
     #     if not cat:
     #         queryset = queryset.filter(purchaser__username=username)
     #     return queryset
-
-
-
-

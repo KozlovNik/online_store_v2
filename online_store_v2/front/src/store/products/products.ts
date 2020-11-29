@@ -68,11 +68,9 @@ export default function products(
         }),
       };
     case ADD_TO_CART_REQUEST:
-      console.log('wtf2')
       return {
         ...state,
         productsByCategory: state.productsByCategory.map((product) => {
-          console.log(product.slug,"----", action.payload.slug)
           if (product.slug === action.payload.slug) {
             return { ...product, isProductLoading: true };
           }
@@ -84,10 +82,8 @@ export default function products(
         ...state,
         productsByCategory: state.productsByCategory.map((product) => {
           if (product.slug === action.payload.slug) {
-            console.log('found  ')
             return { ...product, isProductLoading: false };
           }
-          console.log(product.slug, action.payload.slug)
           return product;
         }),
         cartItems: [...state.cartItems, action.payload.cartItem],

@@ -34,7 +34,6 @@ const Products: React.FC<PropsFromRedux> = (props) => {
           available,
           isProductLoading,
         }) => {
-          console.log(isProductLoading);
           return (
             <div className="product" key={slug}>
               <div className="product__image-wrapper">

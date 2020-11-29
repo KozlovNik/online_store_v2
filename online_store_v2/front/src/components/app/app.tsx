@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { getUser } from "../../store/auth/actions";
 import { getCartItems } from "../../store/products/actions";
+import { getRecentlyViewed } from "../../store/recently-viewed/actions";
 
 import Header from "../header";
 import ModalLoginWindow from "../modal-login-window";
@@ -18,12 +19,18 @@ import Footer from "../footer";
 interface AppInterface {
   getUser: Function;
   getCartItems: Function;
+  getRecentlyViewed: Function;
 }
 
-const App: React.FC<AppInterface> = ({ getUser, getCartItems }) => {
+const App: React.FC<AppInterface> = ({
+  getUser,
+  getCartItems,
+  getRecentlyViewed,
+}) => {
   useEffect(() => {
     getUser();
     getCartItems();
+    getRecentlyViewed();
   }, [getUser, getCartItems]);
 
   return (
@@ -38,9 +45,9 @@ const App: React.FC<AppInterface> = ({ getUser, getCartItems }) => {
           <Route path="/cart" component={CartPage} />
         </Switch>
       </div>
-      <Footer/>
+      <Footer />
     </Router>
   );
 };
 
-export default connect(null, { getUser, getCartItems })(App);
+export default connect(null, { getUser, getCartItems, getRecentlyViewed })(App);

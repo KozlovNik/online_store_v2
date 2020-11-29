@@ -4,6 +4,7 @@ from transliterate import translit
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from accounts.models import User
+from datetime import time
 
 class Category(models.Model):
     name = models.CharField(max_length=150, verbose_name='Категория', unique=True)
@@ -28,6 +29,44 @@ class Brand(models.Model):
         return self.name
 
 
+class ViewedItem(models.Model):
+    product = models.ForeignKey("Product", on_delete=models.CASCADE)
+    time = models.DateTimeField(auto_now=True)
+    recently_viewed = models.ForeignKey("RecentlyViewed", on_delete=models.CASCADE,related_name="vieweditems")
+
+    class Meta:
+        verbose_name = 'Просмотренный продукт'
+        verbose_name_plural = 'Просмотренные продукты'
+        ordering = ['time']
+
+    def __str__(self):
+        return '{0} id \"{1}\"'.format(self.product, self.id)
+
+     
+
+
+class RecentlyViewed(models.Model):
+
+    class Meta:
+        verbose_name = 'Недавно просмотренный'
+        verbose_name_plural = 'Недавно просмотренные'
+
+    def __str__(self):
+        return str(self.id)
+
+    def add_to_recently_viewed(self, id):
+        product = Product.objects.get(id=id)
+        # print(self.vieweditems.all())
+        for item in self.vieweditems.all():
+            if item.product.id == product.id:
+                item.save()
+                return item
+        
+        new_item = ViewedItem(product=product,recently_viewed=self)
+        new_item.save()
+        return new_item   
+
+
 def image_folder(instance, filename):
     filename = instance.slug + '.' + filename.split('.')[1]
     return '{0}/{1}'.format(instance.slug, filename)
@@ -37,6 +76,7 @@ class Product(models.Model):
     slug = models.SlugField(null=True, blank=True, verbose_name='Поле слага')
     description = models.TextField(verbose_name='Описание товара')
     image = models.ImageField(verbose_name='Изображение', upload_to=image_folder)
+    # user_view = models.ForeignKey(UserView, on_delete=models.DO_NOTHING, related_name="products", blank=True, null=True)
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Цена')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория', related_name='products')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Бренд', blank=True, null=True)

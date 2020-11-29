@@ -116,17 +116,17 @@ export const addCartItem = (slug: string): AppThunk<AddCartItem> => (
     })
     .then((res) => {
       setTimeout(() => {
-        console.log(slug)
         dispatch({
           type: ADD_TO_CART_SUCCESS,
           payload: { cartItem: res.data, slug },
         });
       }, 300);
-    }).catch(()=>{
+    })
+    .catch(() => {
       dispatch({
         type: ADD_TO_CART_FAILURE,
         payload: { slug },
-      })
+      });
     });
 };
 
@@ -163,7 +163,6 @@ export const updateCartItem = (
       });
     })
     .catch(() => {
-      console.log("error");
       dispatch({ type: UPDATE_CART_ITEM_FAILURE, payload: { id } });
     });
 };
